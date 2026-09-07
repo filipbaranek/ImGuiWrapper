@@ -30,6 +30,7 @@ target_link_libraries(${PROJECT_NAME}
     PUBLIC 
         imgui
         glad
+        glm
     PRIVATE
         stb
 )
