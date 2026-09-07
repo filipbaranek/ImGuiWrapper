@@ -1,5 +1,5 @@
 #include "Label.h"
-#include "../Styling/Label.h"
+#include "Styling/Label.h"
 
 namespace ui::components
 {

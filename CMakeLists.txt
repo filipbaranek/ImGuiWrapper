@@ -10,8 +10,8 @@ file(GLOB_RECURSE WRAPPER_SOURCES
     "Components/*.h"
     "Styling/*.cpp"
     "Styling/*.h"
-    "Visibility/*.cpp"
-    "Visibility/*.h"
+    "Utils/*.cpp"
+    "Utils/*.h"
 )
 
 add_library(${PROJECT_NAME} STATIC ${WRAPPER_SOURCES})
@@ -20,7 +20,19 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
 
-target_link_libraries(${PROJECT_NAME} PUBLIC imgui)
+target_include_directories(${PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/Components
+    ${CMAKE_CURRENT_SOURCE_DIR}/Styling
+    ${CMAKE_CURRENT_SOURCE_DIR}/Utils
+)
+
+target_link_libraries(${PROJECT_NAME} 
+    PUBLIC 
+        imgui
+        glad
+    PRIVATE
+        stb
+)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "Common.h"
-#include "../Components/Common.h"
-#include "../Components/RadioImageButton.h"
+#include "Components/Common.h"
+#include "Components/RadioImageButton.h"
 
 namespace ui::styling
 {

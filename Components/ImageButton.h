@@ -1,7 +1,7 @@
 #pragma once
 #include <imgui.h>
 #include "Button.h"
-#include "../../Renderer/ImageLoader.h"
+#include "Utils/ImageLoader.h"
 
 namespace ui::components
 {

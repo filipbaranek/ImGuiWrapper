@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <functional>
-#include "../Components/Component.h"
+#include "Components/Component.h"
 
 namespace ui
 {

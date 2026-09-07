@@ -1,5 +1,5 @@
 #include "RadioImageButton.h"
-#include "../Styling/Button.h"
+#include "Styling/Button.h"
 
 namespace ui::components
 {

@@ -1,7 +1,7 @@
 #pragma once
-#include "../Components/Common.h"
-#include "../Components/Linkable.h"
-#include "../Styling/InputBox.h"
+#include "Components/Common.h"
+#include "Components/Linkable.h"
+#include "Styling/InputBox.h"
 
 namespace ui::components
 {

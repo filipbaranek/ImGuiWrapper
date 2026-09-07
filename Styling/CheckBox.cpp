@@ -1,5 +1,5 @@
 #include "CheckBox.h"
-#include "../Components/CheckBox.h"
+#include "Components/CheckBox.h"
 
 namespace ui::styling
 {

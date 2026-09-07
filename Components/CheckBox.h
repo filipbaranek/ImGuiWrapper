@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
-#include "../Styling/Common.h"
-#include "../Components/Component.h"
+#include "Styling/Common.h"
+#include "Components/Component.h"
 
 namespace ui::components
 {

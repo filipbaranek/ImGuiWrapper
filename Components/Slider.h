@@ -1,6 +1,6 @@
 #pragma once
-#include "../Components/Linkable.h"
-#include "../Styling/Slider.h"
+#include "Components/Linkable.h"
+#include "Styling/Slider.h"
 
 namespace ui::components
 {
