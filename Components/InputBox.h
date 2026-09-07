@@ -1,5 +1,5 @@
 #pragma once
-#include "Components/Common.h"
+#include "Components/Component.h"
 #include "Components/Linkable.h"
 #include "Styling/InputBox.h"
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "Common.h"
-#include "Components/Common.h"
+#include "Components/Component.h"
 #include "Components/RadioImageButton.h"
 
 namespace ui::styling

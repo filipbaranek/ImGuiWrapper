@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "Components/Common.h"
+#include "Components/Component.h"
 
 namespace ui::components
 {
