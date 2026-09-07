@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "Utils/VisibilityHandler.h"
 
 namespace ui::components
 {
