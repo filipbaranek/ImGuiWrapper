@@ -20,9 +20,12 @@ namespace ui::components
         template<typename T, typename... Args>
         static std::unique_ptr<T> create(Args&&... args)
         {
-            auto window = std::make_unique<T>(std::forward<Args>(args)...);
-            window->initWindowConfig();
-            window->initComponents();
+            auto  window     = std::make_unique<T>(std::forward<Args>(args)...);
+            auto* baseWindow = static_cast<Window*>(window.get());
+
+            baseWindow->initWindowConfig();
+            baseWindow->initComponents();
+
             return window;
         }
 
