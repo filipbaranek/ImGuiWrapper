@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <imgui.h>
-#include "Component.h"
+#include "Common.h"
 
 namespace ui::components
 {
