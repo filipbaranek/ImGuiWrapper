@@ -1,6 +1,6 @@
 #pragma once
 #include <imgui.h>
-#include "Common.h"
+#include "Component.h"
 
 namespace ui::components
 {

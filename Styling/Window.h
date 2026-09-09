@@ -2,7 +2,7 @@
 #include <imgui.h>
 #include <string>
 #include <functional>
-#include "Common.h"
+#include "Component.h"
 
 namespace ui::styling
 {
