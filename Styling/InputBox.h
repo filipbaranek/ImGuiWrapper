@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <stdexcept>
-#include "Component.h"
+#include "Common.h"
 
 namespace ui::styling
 {

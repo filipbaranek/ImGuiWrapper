@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "Common.h"
 #include "Components/Component.h"
 #include "Components/RadioImageButton.h"
 
