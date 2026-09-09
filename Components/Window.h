@@ -1,4 +1,5 @@
 #pragma once
+#include <utility>
 #include <imgui.h>
 #include <glm/glm.hpp>
 #include "Styling/Window.h"
@@ -10,15 +11,24 @@ namespace ui::components
     class Window
     {
     public:
-        Window(const std::string& layerName);
-
         virtual ~Window() = default;
 
         bool clickedOnWindow(const glm::vec2& clickPos);
 
         bool isVisible();
 
+        template<typename T, typename... Args>
+        static std::unique_ptr<T> create(Args&&... args)
+        {
+            auto window = std::make_unique<T>(std::forward<Args>(args)...);
+            window->initWindowConfig();
+            window->initComponents();
+            return window;
+        }
+
     protected:
+        Window(const std::string& layerName);
+
         virtual void initWindowConfig() = 0;
 
         virtual void initComponents() = 0;
