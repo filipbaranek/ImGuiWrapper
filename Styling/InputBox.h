@@ -27,13 +27,13 @@ namespace ui::styling
     };
 
     template<typename T>
-    void InputBox::render(const std::string&, T*, IConfig*)
+    inline void InputBox::render(const std::string&, T*, IConfig*)
     {
         throw std::logic_error("Unsupported type for input box");
     }
 
     template<>
-    void InputBox::render<int>(const std::string& name, int* value, IConfig* config)
+    inline void InputBox::render<int>(const std::string& name, int* value, IConfig* config)
     {
         initConfig(config);
 
@@ -43,7 +43,7 @@ namespace ui::styling
     }
 
     template<>
-    void InputBox::render<float>(const std::string& name, float* value, IConfig* config)
+    inline void InputBox::render<float>(const std::string& name, float* value, IConfig* config)
     {
         initConfig(config);
 
@@ -53,7 +53,7 @@ namespace ui::styling
     }
 
     template<>
-    void InputBox::render<double>(const std::string& name, double* value, IConfig* config)
+    inline void InputBox::render<double>(const std::string& name, double* value, IConfig* config)
     {
         initConfig(config);
 
@@ -63,7 +63,7 @@ namespace ui::styling
     }
 
     template<>
-    void InputBox::render<char>(const std::string& name, char* value, IConfig* config)
+    inline void InputBox::render<char>(const std::string& name, char* value, IConfig* config)
     {
         initConfig(config);
 
