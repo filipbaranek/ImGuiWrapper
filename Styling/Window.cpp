@@ -1,5 +1,5 @@
 #include "Window.h"
-#include "VisibilityHandler.h"
+#include "Utils/VisibilityHandler.h"
 
 namespace ui::styling
 {
