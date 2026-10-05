@@ -31,6 +31,8 @@ namespace ui::components
 
     void Window::render()
     {
+        // Must run before the visibility check: it also re-evaluates the resolution range (setInRange/setOutOfRange),
+        // so an out-of-range window could otherwise never become visible again
         if (!m_windowConfig.pos.relativePosition)
         {
             ui::styling::Window::setPosAndSize(m_windowConfig);

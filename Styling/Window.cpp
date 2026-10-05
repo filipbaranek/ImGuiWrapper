@@ -40,9 +40,6 @@ namespace ui::styling
             }
             sizeConfig.rawSize = ImVec2(sizeConfig.width * vpSize.x, sizeConfig.height * vpSize.y);
 
-            ImGui::SetNextWindowPos(posConfig.rawPos, ImGuiCond_Always);
-            ImGui::SetNextWindowSize(sizeConfig.rawSize, ImGuiCond_Always);
-
             checkResolutionInRange(config.layerName, vpSize.y, vpSize.x, sizeConfig.minHeight, sizeConfig.minWidth);
         }
     } // namespace
@@ -63,6 +60,11 @@ namespace ui::styling
 
     void Window::init(WindowConfig& config)
     {
+        // Applied here, right before ImGui::Begin, so a hidden window (which never calls Begin)
+        // doesn't leak its pos/size into the next ImGui window
+        ImGui::SetNextWindowPos(config.pos.rawPos, ImGuiCond_Always);
+        ImGui::SetNextWindowSize(config.size.rawSize, ImGuiCond_Always);
+
         ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, config.rounding);
         ImGui::PushStyleColor(ImGuiCol_WindowBg, config.backgroundColor);
         ImGui::PushStyleColor(ImGuiCol_TitleBg, config.titleBar.background);
