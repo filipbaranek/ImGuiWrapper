@@ -6,6 +6,7 @@ set(WRAPPER_SOURCES
     Components/Button.h
     Components/CheckBox.cpp
     Components/CheckBox.h
+    Components/Combo.h
     Components/Component.h
     Components/Dummy.h
     Components/ImageButton.cpp
@@ -24,10 +25,13 @@ set(WRAPPER_SOURCES
     Components/Slider.h
     Components/Window.cpp
     Components/Window.h
+    Components/Tree.h
     Styling/Button.cpp
     Styling/Button.h
     Styling/CheckBox.cpp
     Styling/CheckBox.h
+    Styling/Combo.cpp
+    Styling/Combo.h
     Styling/Common.h
     Styling/Font.h
     Styling/InputBox.cpp
@@ -37,6 +41,8 @@ set(WRAPPER_SOURCES
     Styling/Slider.h
     Styling/Window.cpp
     Styling/Window.h
+    Styling/Tree.cpp
+    Styling/Tree.h
     Utils/ImageLoader.cpp
     Utils/ImageLoader.h
     Utils/VisibilityHandler.cpp
