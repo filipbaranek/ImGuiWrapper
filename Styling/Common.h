@@ -29,4 +29,11 @@ namespace ui::styling
         AppliedStyling styles;
     };
 
+    enum class TextTypes
+    {
+        CLASSIC,
+        DISABLED,
+        BULLET
+    };
+
 } // ui

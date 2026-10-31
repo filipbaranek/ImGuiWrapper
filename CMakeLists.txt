@@ -12,11 +12,11 @@ set(WRAPPER_SOURCES
     Components/ChildWindow.h
     Components/Combo.h
     Components/Component.h
+    Components/Drag.h
     Components/Dummy.h
     Components/ImageButton.cpp
     Components/ImageButton.h
     Components/InputBox.h
-    Components/Label.cpp
     Components/Label.h
     Components/Layout.h
     Components/Linkable.h
@@ -41,6 +41,7 @@ set(WRAPPER_SOURCES
     Styling/ChildWindow.cpp
     Styling/ChildWindow.h
     Styling/Common.h
+    Styling/Drag.h
     Styling/Font.h
     Styling/InputBox.cpp
     Styling/InputBox.h

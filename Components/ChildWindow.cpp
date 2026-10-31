@@ -11,6 +11,9 @@ namespace ui::components
     void ChildWindow::render()
     {
         auto* childWindowConfig = dynamic_cast<ui::styling::ChildWindowConfig*>(m_config.get());
+        if (childWindowConfig == nullptr) {
+            throw std::invalid_argument("Child requires a ChildWindowConfig");
+        }
 
         ui::styling::ChildWindow::setSize(*childWindowConfig);
         ui::styling::ChildWindow::init(*childWindowConfig);
