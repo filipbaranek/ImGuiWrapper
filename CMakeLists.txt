@@ -6,6 +6,10 @@ set(WRAPPER_SOURCES
     Components/Button.h
     Components/CheckBox.cpp
     Components/CheckBox.h
+    Components/CollapsingHeader.cpp
+    Components/CollapsingHeader.h
+    Components/ChildWindow.cpp
+    Components/ChildWindow.h
     Components/Combo.h
     Components/Component.h
     Components/Dummy.h
@@ -30,8 +34,12 @@ set(WRAPPER_SOURCES
     Styling/Button.h
     Styling/CheckBox.cpp
     Styling/CheckBox.h
+    Styling/CollapsingHeader.cpp
+    Styling/CollapsingHeader.h
     Styling/Combo.cpp
     Styling/Combo.h
+    Styling/ChildWindow.cpp
+    Styling/ChildWindow.h
     Styling/Common.h
     Styling/Font.h
     Styling/InputBox.cpp
