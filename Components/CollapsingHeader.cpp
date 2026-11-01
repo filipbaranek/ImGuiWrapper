@@ -6,15 +6,6 @@ namespace ui::components
     CollapsingHeader::CollapsingHeader(const std::string& name, std::shared_ptr<ui::styling::IConfig> config)
         : Component(name, std::move(config))
     {
-        auto* collapsingHeaderConfig = dynamic_cast<ui::styling::CollapsingHeaderConfig*>(m_config.get());
-        if (collapsingHeaderConfig->name.empty())
-        {
-            collapsingHeaderConfig->name = name;
-        }
-        if (!collapsingHeaderConfig->name.empty())
-        {
-            m_name = collapsingHeaderConfig->name;
-        }
     }
 
     void CollapsingHeader::render()
@@ -26,7 +17,7 @@ namespace ui::components
             return;
         }
 
-        const bool isOpen = ui::styling::CollapsingHeader::initConfig(*collapsingHeaderConfig);
+        const bool isOpen = ui::styling::CollapsingHeader::initConfig(m_name, *collapsingHeaderConfig);
         if (!isOpen)
         {
             ui::styling::CollapsingHeader::destroy(*collapsingHeaderConfig);

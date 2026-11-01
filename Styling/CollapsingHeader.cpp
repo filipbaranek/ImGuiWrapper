@@ -3,7 +3,7 @@
 namespace ui::styling
 {
 
-    bool CollapsingHeader::initConfig(CollapsingHeaderConfig& config)
+    bool CollapsingHeader::initConfig(const std::string& name, CollapsingHeaderConfig& config)
     {
         ImGui::PushStyleColor(ImGuiCol_Header, config.header);
         ImGui::PushStyleColor(ImGuiCol_HeaderHovered, config.headerHovered);
@@ -13,7 +13,7 @@ namespace ui::styling
 
         config.styles.appliedColorStyles += 3;
         config.styles.appliedVarStyles += 2;
-        return ImGui::CollapsingHeader(config.name.c_str(), config.flags);
+        return ImGui::CollapsingHeader(name.c_str(), config.flags);
     }
 
     void CollapsingHeader::destroy(CollapsingHeaderConfig& config)

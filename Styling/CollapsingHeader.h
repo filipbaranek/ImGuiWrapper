@@ -11,7 +11,6 @@ namespace ui::styling
 
     struct CollapsingHeaderConfig : IConfig
     {
-        std::string name;
         ImVec4 header{};
         ImVec4 headerHovered{};
         ImVec4 headerActive{};
@@ -27,7 +26,7 @@ namespace ui::styling
 
         static void addToLayout(std::function<void()> assignComponents, const ImVec2& margin = {});
 
-        static bool initConfig(CollapsingHeaderConfig& config);
+        static bool initConfig(const std::string& name, CollapsingHeaderConfig& config);
 
         static void destroy(CollapsingHeaderConfig& config);
     };
