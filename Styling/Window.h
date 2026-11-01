@@ -23,6 +23,7 @@ namespace ui::styling
         float  minHeight;   // represents percentage of screen to achieve responsive design
         ImVec2 rawSize;     // used automaticly by IWindow class
         ImVec2 realSize;    // auto fit size value
+        
     };
 
     struct WindowTitleBarConfig
@@ -42,6 +43,7 @@ namespace ui::styling
         WindowSizeConfig     size;
         WindowTitleBarConfig titleBar;
         AppliedStyling       styles;
+        ImVec2 viewPortSize;
     };
 
     class Window

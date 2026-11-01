@@ -62,8 +62,15 @@ namespace ui::styling
     {
         // Applied here, right before ImGui::Begin, so a hidden window (which never calls Begin)
         // doesn't leak its pos/size into the next ImGui window
-        ImGui::SetNextWindowPos(config.pos.rawPos, ImGuiCond_Always);
-        ImGui::SetNextWindowSize(config.size.rawSize, ImGuiCond_Always);
+        auto viewPort = ImGui::GetMainViewport();
+        if (config.viewPortSize.x != viewPort->Size.x || config.viewPortSize.y != viewPort->Size.y) {
+            config.viewPortSize = viewPort->Size;
+            ImGui::SetNextWindowPos(config.pos.rawPos, ImGuiCond_Always);
+            ImGui::SetNextWindowSize(config.size.rawSize, ImGuiCond_Always);
+        }
+        
+
+        
 
         ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, config.rounding);
         ImGui::PushStyleColor(ImGuiCol_WindowBg, config.backgroundColor);
@@ -72,9 +79,14 @@ namespace ui::styling
         ImGui::PushStyleColor(ImGuiCol_TitleBgCollapsed, config.titleBar.background);
         ImGui::PushFont(config.titleBar.font);
         ImGui::Begin(config.name.c_str(), nullptr, config.flags);
-        
+
         config.size.realSize = ImGui::GetWindowSize();
+        config.pos.rawPos = ImGui::GetWindowPos();
+        config.pos.posX = (config.pos.rawPos.x - viewPort->Pos.x) / viewPort->Size.x;
+        config.pos.posY = (config.pos.rawPos.y - viewPort->Pos.y) / viewPort->Size.y;
+        
         config.styles.appliedColorStyles += 4;
+
         ++config.styles.appliedVarStyles;
     }
 
