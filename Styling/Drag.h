@@ -13,6 +13,7 @@ namespace ui::styling
         T max;
         float speed;
         float width;
+        float frameBorderSize;
         std::string format;
         ImVec4 background;
         ImVec4 onHoverBackground;
@@ -35,16 +36,20 @@ namespace ui::styling
             ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, config->onHoverBackground);
             ImGui::PushStyleColor(ImGuiCol_FrameBgActive, config->onActiveBackground);
             ImGui::SetNextItemWidth(config->width * ImGui::GetWindowSize().x);
+            ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, config->frameBorderSize);
 
             config->styles.appliedColorStyles += 3;
+            config->styles.appliedVarStyles += 1;
         }
 
         template <typename T>
         static void destroy(DragConfig<T> *config)
         {
             ImGui::PopStyleColor(config->styles.appliedColorStyles);
+            ImGui::PopStyleVar(config->styles.appliedVarStyles);
 
             config->styles.appliedColorStyles = 0;
+            config->styles.appliedVarStyles = 0;
         }
     };
 

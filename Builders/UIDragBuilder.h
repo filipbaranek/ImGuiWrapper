@@ -14,6 +14,7 @@ public:
         m_config.max = 0;
         m_config.speed = 1.0f;
         m_config.width = 0.0f;
+        m_config.frameBorderSize = 0.0f;
         m_config.format = "%.3f";
     }
 
@@ -38,6 +39,12 @@ public:
     DragConfigBuilder& width(float width)
     {
         m_config.width = width;
+        return *this;
+    }
+
+    DragConfigBuilder& frameBorderSize(float size)
+    {
+        m_config.frameBorderSize = size;
         return *this;
     }
 
