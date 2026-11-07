@@ -10,29 +10,39 @@ namespace ui::styling
     class Font
     {
     public:
-        Font() = delete;
+        Font(const Font&) = delete;
+
+        Font& operator=(const Font&) = delete;
 
         static ImFont* regular(float size)
         {
-            return get("../fonts/OpenSans-Regular.ttf", size);
+            return instance().get("../fonts/OpenSans-Regular.ttf", size);
         }
 
         static ImFont* bold(float size)
         {
-            return get("../fonts/OpenSans_Condensed-Bold.ttf", size);
+            return instance().get("../fonts/OpenSans_Condensed-Bold.ttf", size);
         }
 
         static ImFont* extraBold(float size)
         {
-            return get("../fonts/OpenSans_Condensed-ExtraBold.ttf", size);
+            return instance().get("../fonts/OpenSans_Condensed-ExtraBold.ttf", size);
         }
 
     private:
-        static ImFont* get(const std::string& filePath, float size)
-        {
-            static std::map<std::pair<std::string, float>, ImFont*> fonts;
+        Font() = default;
 
-            auto [entry, isNew] = fonts.try_emplace(std::pair{filePath, size}, nullptr);
+        ~Font() = default;
+
+        static Font& instance()
+        {
+            static Font s_instance;
+            return s_instance;
+        }
+
+        ImFont* get(const std::string& filePath, float size)
+        {
+            auto [entry, isNew] = m_fonts.try_emplace(std::pair{filePath, size}, nullptr);
             if (isNew)
             {
                 entry->second = ImGui::GetIO().Fonts->AddFontFromFileTTF(filePath.c_str(), size);
@@ -40,6 +50,9 @@ namespace ui::styling
 
             return entry->second;
         }
+
+    private:
+        std::map<std::pair<std::string, float>, ImFont*> m_fonts;
     };
 
 } // ui::styling
