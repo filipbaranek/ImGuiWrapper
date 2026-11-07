@@ -48,7 +48,7 @@ Welcome to the ImGuiWrapper library documentation. This library provides an obje
 
 ## Architecture Overview
 
-The library operates on a strict `Window` -> `Layout` -> `Component` hierarchy:
+The library operates on a `Window` -> `Layout` -> `Component` hierarchy, where a `Layout` is itself a `Component` and can contain other layouts:
 
 1. **Windows** dictate the main ImGui context. You create a custom layer by inheriting from `ui::components::Window`.
 2. Inside your custom Window's `initWindowConfig()` method, you define its size, position, and colors using the `WindowConfigBuilder`.

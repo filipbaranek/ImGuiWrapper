@@ -1,21 +1,37 @@
 #pragma once
+#include <memory>
+#include <utility>
 #include <vector>
+#include <imgui.h>
 #include "Components/Component.h"
+#include "Styling/Window.h"
 
 namespace ui::components
 {
 
-    class Layout
+    class Layout : public Component
     {
     public:
         Layout(const ImVec2& margin = {})
-            : m_margin(margin)
-            , m_isVisible(true)
+            : Component({}, {})
+            , m_margin(margin)
         { }
 
-        const bool isVisible() const
+        void render() override
         {
-            return m_isVisible;
+            ui::styling::Window::addToLayout([&]() {
+                for (auto& component : m_components)
+                {
+                    if (component->isVisible())
+                    {
+                        component->render();
+                    }
+                    else
+                    {
+                        ImGui::Dummy(ImVec2{ 0.0f, ImGui::GetFrameHeight() });
+                    }
+                }
+            }, m_margin);
         }
 
         const ImVec2& margin() const
@@ -38,14 +54,8 @@ namespace ui::components
             m_components.emplace_back(std::move(component));
         }
 
-        void setIsVisible(bool isVisible)
-        {
-            m_isVisible = isVisible;
-        }
-
     private:
-        bool                                                 m_isVisible;
-        const ImVec2                                         m_margin;
+        const ImVec2                            m_margin;
         std::vector<std::unique_ptr<Component>> m_components;
     };
 

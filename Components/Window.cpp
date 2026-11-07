@@ -51,26 +51,13 @@ namespace ui::components
 
         for (auto& layout : m_layouts)
         {
-            if (!layout->isVisible())
+            if (layout->isVisible())
             {
-                continue;
+                layout->render();
             }
-
-            ui::styling::Window::addToLayout([&]() {
-                for (auto& component : layout->components())
-                {
-                    if (component->isVisible())
-                    {
-                        component->render();
-                    }
-                    else
-                    {
-                        ImGui::Dummy(ImVec2{ 0.0f, ImGui::GetFrameHeight() });
-                    }
-                }
-            }, layout->margin());
         }
-        
+
+
         ui::styling::Window::destroy(m_windowConfig);
     }
 
