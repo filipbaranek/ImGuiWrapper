@@ -6,13 +6,15 @@ namespace ui::components
 
     RadioButton::RadioButton(
         const std::string& name,
-        std::vector<RadioButton*>&            group,
+        RadioGroup&                           group,
         std::shared_ptr<ui::styling::IConfig> config,
         std::function<void(Button*)> action)
         : Button(name, std::move(config), std::move(action))
         , m_isSelected{}
         , m_group(group)
-    { }
+    {
+        m_group.add(this);
+    }
 
     void RadioButton::render()
     {
@@ -29,9 +31,9 @@ namespace ui::components
         m_isSelected = isSelected;
     }
 
-    std::vector<RadioButton*>& RadioButton::group()
+    void RadioButton::select()
     {
-        return m_group;
+        m_group.select(this);
     }
 
 } // ui::components

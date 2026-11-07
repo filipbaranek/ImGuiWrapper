@@ -7,7 +7,7 @@ namespace ui::components
     RadioImageButton::RadioImageButton(
         const std::string&                    name,
         const std::string&                    iconFilePath,
-        std::vector<RadioButton*>&            group,
+        RadioGroup&                           group,
         std::shared_ptr<ui::styling::IConfig> config,
         std::function<void(Button*)>          action)
         : Button(name, std::move(config), std::move(action))

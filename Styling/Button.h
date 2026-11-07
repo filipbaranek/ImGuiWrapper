@@ -38,8 +38,6 @@ namespace ui::styling
         template<ui::ButtonType T>
         static void draw(ui::components::Button* button, ButtonConfig* config);
 
-        static void onRadioButtonClick(ui::components::RadioButton* button);
-
         static void init(ui::components::Button* button, ButtonConfig* config);
 
         static void destroy(ButtonConfig* config);
@@ -71,7 +69,7 @@ namespace ui::styling
 
         if (ImGui::Button(radioButton->name().c_str(), buttonSize))
         {
-            onRadioButtonClick(radioButton);
+            radioButton->select();
             radioButton->execute();
         }
     }
@@ -98,7 +96,7 @@ namespace ui::styling
 
         if (ImGui::ImageButton(radioImageButton->name().c_str(), radioImageButton->textureID(), buttonSize))
         {
-            onRadioButtonClick(radioImageButton);
+            radioImageButton->select();
             radioImageButton->execute();
         }
     }

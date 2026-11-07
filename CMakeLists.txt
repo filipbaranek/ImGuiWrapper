@@ -21,6 +21,8 @@ set(WRAPPER_SOURCES
     Components/Linkable.h
     Components/RadioButton.cpp
     Components/RadioButton.h
+    Components/RadioGroup.cpp
+    Components/RadioGroup.h
     Components/RadioImageButton.cpp
     Components/RadioImageButton.h
     Components/SameLine.h

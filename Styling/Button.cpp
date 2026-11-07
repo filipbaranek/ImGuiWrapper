@@ -74,13 +74,4 @@ namespace ui::styling
         config->styles.appliedVarStyles = 0;
     }
 
-    void Button::onRadioButtonClick(ui::components::RadioButton* button)
-    {
-        for (auto& groupButton : button->group())
-        {
-            groupButton->setIsSelected(false);
-        }
-        button->setIsSelected(true);
-    }
-
 } // ui::styling

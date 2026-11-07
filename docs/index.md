@@ -19,6 +19,7 @@ Welcome to the ImGuiWrapper library documentation. This library provides an obje
 * [Label](Components/Label.md)
 * [RadioButton](Components/RadioButton.md)
 * [RadioImageButton](Components/RadioImageButton.md)
+* [RadioGroup](Components/RadioGroup.md)
 * [Spacing Helpers (SameLine & Separator)](Components/SpacingHelpers.md)
 * [Slider](Components/Slider.md)
 
