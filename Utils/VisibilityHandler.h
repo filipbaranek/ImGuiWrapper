@@ -5,35 +5,30 @@
 class VisibilityHandler
 {
 public:
-    VisibilityHandler() = delete;
+    VisibilityHandler(const VisibilityHandler&) = delete;
 
-    ~VisibilityHandler() = delete;
+    VisibilityHandler& operator=(const VisibilityHandler&) = delete;
 
     static void init(const std::string& layer);
 
     static bool isVisible(const std::string& layer);
 
-    inline static void show(const std::string& layer)
-    {
-        s_layerVisibility[layer] = true;
-    }
+    static void show(const std::string& layer);
 
-    inline static void hide(const std::string& layer)
-    {
-        s_layerVisibility[layer] = false;
-    }
+    static void hide(const std::string& layer);
 
-    inline static void setOutOfRange(const std::string& layer)
-    {
-        s_layerInRange[layer] = false;
-    }
+    static void setOutOfRange(const std::string& layer);
 
-    inline static void setInRange(const std::string& layer)
-    {
-        s_layerInRange[layer] = true;
-    }
+    static void setInRange(const std::string& layer);
 
-protected:
-    inline static std::map<std::string, bool> s_layerVisibility{};
-    inline static std::map<std::string, bool> s_layerInRange{};
+private:
+    VisibilityHandler() = default;
+
+    ~VisibilityHandler() = default;
+
+    static VisibilityHandler& instance();
+
+private:
+    std::map<std::string, bool> m_layerVisibility;
+    std::map<std::string, bool> m_layerInRange;
 };
