@@ -1,4 +1,7 @@
 #pragma once
+#include <map>
+#include <string>
+#include <utility>
 #include <imgui.h>
 
 namespace ui::styling
@@ -11,20 +14,31 @@ namespace ui::styling
 
         static ImFont* regular(float size)
         {
-            auto& io = ImGui::GetIO();
-            return io.Fonts->AddFontFromFileTTF("../fonts/OpenSans-Regular.ttf", size);
+            return get("../fonts/OpenSans-Regular.ttf", size);
         }
 
         static ImFont* bold(float size)
         {
-            auto& io = ImGui::GetIO();
-            return io.Fonts->AddFontFromFileTTF("../fonts/OpenSans_Condensed-Bold.ttf", size);
+            return get("../fonts/OpenSans_Condensed-Bold.ttf", size);
         }
 
         static ImFont* extraBold(float size)
         {
-            auto& io = ImGui::GetIO();
-            return io.Fonts->AddFontFromFileTTF("../fonts/OpenSans_Condensed-ExtraBold.ttf", size);
+            return get("../fonts/OpenSans_Condensed-ExtraBold.ttf", size);
+        }
+
+    private:
+        static ImFont* get(const std::string& filePath, float size)
+        {
+            static std::map<std::pair<std::string, float>, ImFont*> fonts;
+
+            auto [entry, isNew] = fonts.try_emplace(std::pair{filePath, size}, nullptr);
+            if (isNew)
+            {
+                entry->second = ImGui::GetIO().Fonts->AddFontFromFileTTF(filePath.c_str(), size);
+            }
+
+            return entry->second;
         }
     };
 
