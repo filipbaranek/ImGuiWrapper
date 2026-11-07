@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.15)
 project(ImGuiWrapper VERSION 1.0.0 LANGUAGES CXX)
 
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+    include(cmake/Dependencies.cmake)
+endif()
+
 set(WRAPPER_SOURCES
     Components/Button.cpp
     Components/Button.h

@@ -18,12 +18,21 @@ The library requires a compiler that supports **C++20** and links against the fo
 * `glm` (Public)
 * `stb` (Private - specifically `stb_image`)
 
+## Building on Its Own
+
+CMake downloads the dependencies automatically. Generating the `glad` OpenGL loader also requires Python 3 with the `ninja2` package.
+
+```bash
+cmake -S . -B build
+cmake --build build -j
+```
+
 ## Integration (CMake)
 
 Since `ImGuiWrapper` is set up as a static library, you can easily integrate it into your existing CMake project.
 
 1. Clone this repository into your project (e.g., into a `libs/` or `vendor/` folder).
-2. Add it to your `CMakeLists.txt`:
+2. Add it to your `CMakeLists.txt`. Your project must define the `imgui`, `glad`, `glm` and `stb` targets, as nothing is downloaded in this mode:
 
 ```cmake
 add_subdirectory(path/to/ImGuiWrapper)
