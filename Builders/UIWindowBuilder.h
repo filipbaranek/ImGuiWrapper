@@ -1,4 +1,5 @@
 #pragma once
+#include <stdexcept>
 #include <Styling/Window.h>
 
 class WindowPosConfigBuilder
@@ -38,7 +39,7 @@ public:
         return *this;
     }
 
-    ui::styling::WindowPosConfig&& build()
+    ui::styling::WindowPosConfig build()
     {
         return std::move(m_config);   
     }
@@ -83,7 +84,7 @@ public:
         return *this;
     }
 
-    ui::styling::WindowSizeConfig&& build()
+    ui::styling::WindowSizeConfig build()
     {
         return std::move(m_config);
     }
@@ -113,7 +114,7 @@ public:
         return *this;
     }
 
-    ui::styling::WindowTitleBarConfig&& build()
+    ui::styling::WindowTitleBarConfig build()
     {
         return std::move(m_config);
     }
@@ -179,7 +180,7 @@ public:
         return *this;
     }
 
-    ui::styling::WindowConfig&& build()
+    ui::styling::WindowConfig build()
     {
         if (m_config.name.empty())
         {

@@ -15,7 +15,7 @@ Handles the responsive positioning of the window.
 | `posY(float)` | Y coordinate relative to viewport. |
 | `relativePosX(float)` | Exact X coordinate in pixels (used when `relativePosition` is true). |
 | `relativePosY(float)` | Exact Y coordinate in pixels. |
-| **`build()`** | **Returns `ui::styling::WindowPosConfig&&`** |
+| **`build()`** | **Returns `ui::styling::WindowPosConfig`** |
 
 ## WindowSizeConfigBuilder
 
@@ -27,7 +27,7 @@ Handles the responsive dimensions and minimum bounds of the window.
 | `height(float)` | Height relative to the viewport. |
 | `minWidth(float)` | Minimum allowed viewport width before the window hides itself to prevent layout corruption. |
 | `minHeight(float)` | Minimum allowed viewport height before the window hides itself. |
-| **`build()`** | **Returns `ui::styling::WindowSizeConfig&&`** |
+| **`build()`** | **Returns `ui::styling::WindowSizeConfig`** |
 
 ## WindowTitleBarBuilder
 
@@ -37,7 +37,7 @@ Handles the styling of the window's title bar.
 | :--- | :--- |
 | `background(const ImVec4&)`| Background color of the title bar. |
 | `font(ImFont*)` | Font used for the window's title. |
-| **`build()`** | **Returns `ui::styling::WindowTitleBarConfig&&`** |
+| **`build()`** | **Returns `ui::styling::WindowTitleBarConfig`** |
 
 ## WindowConfigBuilder (Main Builder)
 
@@ -53,7 +53,7 @@ Combines the configs from above with general window properties.
 | `pos(const WindowPosConfig&)`| Takes the result of `WindowPosConfigBuilder::build()`. |
 | `size(const WindowSizeConfig&)`| Takes the result of `WindowSizeConfigBuilder::build()`. |
 | `titleBar(...)` | Takes the result of `WindowTitleBarBuilder::build()`. |
-| **`build()`** | **Returns `ui::styling::WindowConfig&&`** |
+| **`build()`** | **Returns `ui::styling::WindowConfig`** |
 
 ## Example Usage
 
