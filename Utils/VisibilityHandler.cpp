@@ -14,26 +14,25 @@ void VisibilityHandler::init(const std::string& layer)
 
 bool VisibilityHandler::isVisible(const std::string& layer)
 {
-    VisibilityHandler& handler = instance();
-    return handler.m_layerVisibility[layer] && handler.m_layerInRange[layer];
+    return m_layerVisibility[layer] && m_layerInRange[layer];
 }
 
 void VisibilityHandler::show(const std::string& layer)
 {
-    instance().m_layerVisibility[layer] = true;
+    m_layerVisibility[layer] = true;
 }
 
 void VisibilityHandler::hide(const std::string& layer)
 {
-    instance().m_layerVisibility[layer] = false;
+    m_layerVisibility[layer] = false;
 }
 
 void VisibilityHandler::setOutOfRange(const std::string& layer)
 {
-    instance().m_layerInRange[layer] = false;
+    m_layerInRange[layer] = false;
 }
 
 void VisibilityHandler::setInRange(const std::string& layer)
 {
-    instance().m_layerInRange[layer] = true;
+    m_layerInRange[layer] = true;
 }

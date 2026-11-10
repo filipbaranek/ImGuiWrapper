@@ -16,11 +16,11 @@ namespace ui::styling
 
             if (width < minResWidth || height < minResHeight)
             {
-                VisibilityHandler::setOutOfRange(layer);
+                VisibilityHandler::instance().setOutOfRange(layer);
             }
             else
             {
-                VisibilityHandler::setInRange(layer);
+                VisibilityHandler::instance().setInRange(layer);
             }
         }
 

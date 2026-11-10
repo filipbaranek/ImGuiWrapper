@@ -26,7 +26,7 @@ namespace ui::components
 
     bool Window::isVisible()
     {
-        return VisibilityHandler::isVisible(m_layerName);
+        return VisibilityHandler::instance().isVisible(m_layerName);
     }
 
     void Window::render()
@@ -42,7 +42,7 @@ namespace ui::components
             ui::styling::Window::setRelativePosAndSize(m_windowConfig);
         }
 
-        if (!VisibilityHandler::isVisible(m_layerName))
+        if (!VisibilityHandler::instance().isVisible(m_layerName))
         {
             return;
         }
