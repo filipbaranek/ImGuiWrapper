@@ -17,7 +17,7 @@ namespace ui::components
 
     void RadioImageButton::render()
     {
-        ui::styling::Button::render<ui::ButtonType::RADIO_IMAGE>(this);
+        ui::styling::RadioImageButton(this).render();
     }
 
 } // ui::components

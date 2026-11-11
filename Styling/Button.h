@@ -1,5 +1,6 @@
 #pragma once
 #include "Common.h"
+#include "Styling.h"
 #include "Components/Component.h"
 #include "Components/RadioImageButton.h"
 
@@ -19,86 +20,57 @@ namespace ui::styling
         ImVec2  framePadding;
     };
 
-    class Button
+    class Button : public Styling
     {
     public:
-        Button() = delete;
+        Button(ui::components::Button* button);
 
-        template<ui::ButtonType T = ui::ButtonType::DEFAULT>
-        static void render(ui::components::Button* button)
-        {
-            auto* config = dynamic_cast<ButtonConfig*>(button->config());
+    protected:
+        void pushStyle() override;
 
-            init(button, config);
-            draw<T>(button, config);
-            destroy(config);
-        }
+        void popStyle() override;
 
-    private:
-        template<ui::ButtonType T>
-        static void draw(ui::components::Button* button, ButtonConfig* config);
+        void draw() override;
 
-        static void init(ui::components::Button* button, ButtonConfig* config);
-
-        static void destroy(ButtonConfig* config);
+    protected:
+        ui::components::Button* m_button;
+        ButtonConfig*           m_config;
     };
 
-    template<ui::ButtonType T>
-    inline void Button::draw(ui::components::Button* button, ButtonConfig* config)
+    class ImageButton : public Button
     {
-        throw std::runtime_error("Unknown button type");
-    }
+    public:
+        ImageButton(ui::components::ImageButton* imageButton);
 
-    template<>
-    inline void Button::draw<ui::ButtonType::DEFAULT>(ui::components::Button* button, ButtonConfig* config)
+    protected:
+        void draw() override;
+
+    private:
+        ui::components::ImageButton* m_imageButton;
+    };
+
+    class RadioButton : public Button
     {
-        const ImVec2 buttonSize = config->realSize;
+    public:
+        RadioButton(ui::components::RadioButton* radioButton);
 
-        if (ImGui::Button(button->name().c_str(), buttonSize))
-        {
-            button->execute();
-        }
-    }
+    protected:
+        void draw() override;
 
-    template<>
-    inline void Button::draw<ui::ButtonType::RADIO>(ui::components::Button* button, ButtonConfig* config)
+    private:
+        ui::components::RadioButton* m_radioButton;
+    };
+
+    class RadioImageButton : public Button
     {
-        auto* radioButton = dynamic_cast<ui::components::RadioButton*>(button);
+    public:
+        RadioImageButton(ui::components::RadioImageButton* radioImageButton);
 
-        const ImVec2 buttonSize = config->realSize;
+    protected:
+        void draw() override;
 
-        if (ImGui::Button(radioButton->name().c_str(), buttonSize))
-        {
-            radioButton->select();
-            radioButton->execute();
-        }
-    }
-
-    template<>
-    inline void Button::draw<ui::ButtonType::IMAGE>(ui::components::Button* button, ButtonConfig* config)
-    {
-        auto* imageButton = dynamic_cast<ui::components::ImageButton*>(button);
-
-        const ImVec2 buttonSize = config->realSize;
-
-        if (ImGui::ImageButton(button->name().c_str(), imageButton->textureID(), buttonSize))
-        {
-            button->execute();
-        }
-    }
-
-    template<>
-    inline void Button::draw<ui::ButtonType::RADIO_IMAGE>(ui::components::Button* button, ButtonConfig* config)
-    {
-        auto* radioImageButton = dynamic_cast<ui::components::RadioImageButton*>(button);
-
-        const ImVec2 buttonSize = config->realSize;
-
-        if (ImGui::ImageButton(radioImageButton->name().c_str(), radioImageButton->textureID(), buttonSize))
-        {
-            radioImageButton->select();
-            radioImageButton->execute();
-        }
-    }
+    private:
+        ui::components::RadioImageButton* m_radioImageButton;
+    };
 
 } // ui::styling

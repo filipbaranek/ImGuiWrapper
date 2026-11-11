@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "Common.h"
+#include "Styling.h"
 
 namespace ui::styling
 {
@@ -18,65 +19,60 @@ namespace ui::styling
         ImVec4 onGrabActiveBackground;
     };
 
-    class Slider
+    template<typename T>
+    class Slider : public Styling
     {
     public:
-        Slider() = delete;
+        Slider(const std::string& name, T* value, IConfig* config)
+            : m_name(name)
+            , m_value(value)
+            , m_config(dynamic_cast<SliderConfig<T>*>(config))
+        { }
 
-        template<typename T>
-        static void render(std::string& name, T* value, IConfig* config);
+    protected:
+        void pushStyle() override
+        {
+            ImGui::PushStyleColor(ImGuiCol_FrameBg, m_config->background);
+            ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, m_config->onHoverBackground);
+            ImGui::PushStyleColor(ImGuiCol_FrameBgActive, m_config->onActiveBackground);
+            ImGui::PushStyleColor(ImGuiCol_SliderGrab, m_config->grabBackground);
+            ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, m_config->onGrabActiveBackground);
+            ImGui::SetNextItemWidth(m_config->width * ImGui::GetWindowSize().x);
+
+            m_config->styles.appliedColorStyles += 5;
+        }
+
+        void popStyle() override
+        {
+            ImGui::PopStyleColor(m_config->styles.appliedColorStyles);
+
+            m_config->styles.appliedColorStyles = 0;
+        }
+
+        void draw() override;
 
     private:
-        template<typename T>
-        static void initConfig(SliderConfig<T>* config)
-        {
-            ImGui::PushStyleColor(ImGuiCol_FrameBg, config->background);
-            ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, config->onHoverBackground);
-            ImGui::PushStyleColor(ImGuiCol_FrameBgActive, config->onActiveBackground);
-            ImGui::PushStyleColor(ImGuiCol_SliderGrab, config->grabBackground);
-            ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, config->onGrabActiveBackground);
-            ImGui::SetNextItemWidth(config->width * ImGui::GetWindowSize().x);
-
-            config->styles.appliedColorStyles += 5;
-        }
-
-        template<typename T>
-        static void destroy(SliderConfig<T>* config)
-        {
-            ImGui::PopStyleColor(config->styles.appliedColorStyles);
-
-            config->styles.appliedColorStyles = 0;
-        }
+        const std::string& m_name;
+        T*                 m_value;
+        SliderConfig<T>*   m_config;
     };
 
     template<typename T>
-    inline void Slider::render(std::string& name, T* value, IConfig* config)
+    inline void Slider<T>::draw()
     {
         throw std::logic_error("Unsupported type for slider");
     }
 
     template<>
-    inline void Slider::render<int>(std::string& name, int* value, IConfig* config)
+    inline void Slider<int>::draw()
     {
-        auto* sliderConfig = dynamic_cast<SliderConfig<int>*>(config);
-
-        initConfig(sliderConfig);
-
-        ImGui::SliderInt(name.c_str(), value, sliderConfig->min, sliderConfig->max);
-
-        destroy(sliderConfig);
+        ImGui::SliderInt(m_name.c_str(), m_value, m_config->min, m_config->max);
     }
 
     template<>
-    inline void Slider::render<float>(std::string& name, float* value, IConfig* config)
+    inline void Slider<float>::draw()
     {
-        auto* sliderConfig = dynamic_cast<SliderConfig<float>*>(config);
-
-        initConfig(sliderConfig);
-
-        ImGui::SliderFloat(name.c_str(), value, sliderConfig->min, sliderConfig->max);
-
-        destroy(sliderConfig);
+        ImGui::SliderFloat(m_name.c_str(), m_value, m_config->min, m_config->max);
     }
 
 } // ui::comopnents

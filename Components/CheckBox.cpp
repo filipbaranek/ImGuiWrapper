@@ -11,7 +11,7 @@ namespace ui::components
 
     void CheckBox::render()
     {
-        ui::styling::CheckBox::render(this);
+        ui::styling::CheckBox(this).render();
     }
 
     bool* CheckBox::isChecked()

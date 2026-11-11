@@ -14,7 +14,7 @@ namespace ui::components
 
     void ImageButton::render()
     {
-        ui::styling::Button::render<ui::ButtonType::IMAGE>(this);
+        ui::styling::ImageButton(this).render();
     }
 
     const int ImageButton::textureID() const

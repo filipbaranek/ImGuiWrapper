@@ -13,9 +13,11 @@ The `ui::styling::Label` class manages the rendering of text, including dynamic 
 * **`LabelConfig`**: Holds the target `ImFont` pointer and the `ImVec4` text color.
 
 ### Internal Flow
-1. **`init()`**: 
+`Label` derives from [`Styling`](Styling.md), whose `render()` template method runs the following steps:
+
+1. **`pushStyle()`**: 
    * Pushes the target font to ImGui.
    * Calculates a responsive font scale factor based on the current `ImGui::GetMainViewport()->Size` compared to standard text dimensions.
    * Calls `ImGui::SetWindowFontScale()` to adjust the text size.
-   * Calls `ImGui::TextColored()` to render the string.
-2. **`destroy()`**: Resets the window font scale back to `1.0f` and pops the font from the ImGui stack.
+2. **`draw()`**: Calls `ImGui::TextColored()` to render the string.
+3. **`popStyle()`**: Resets the window font scale back to `1.0f` and pops the font from the ImGui stack.

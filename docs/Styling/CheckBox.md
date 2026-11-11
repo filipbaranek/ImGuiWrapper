@@ -13,5 +13,8 @@ The `ui::styling::CheckBox` class handles the transition of a `CheckBoxConfig` i
 * **`CheckBoxConfig`**: The data struct holding frame colors, checkmark colors, and padding.
 
 ### Internal Flow
-1. **`init()`**: Pushes `ImGuiCol_CheckMark`, `ImGuiCol_FrameBg`, etc., onto the ImGui style stack. It then executes the `ImGui::Checkbox` draw call, passing the internal boolean pointer from the component.
-2. **`destroy()`**: Pops the specific number of styles pushed during the initialization phase to ensure the global ImGui state is not corrupted for subsequent UI elements.
+`CheckBox` derives from [`Styling`](Styling.md), whose `render()` template method runs the following steps:
+
+1. **`pushStyle()`**: Pushes `ImGuiCol_CheckMark`, `ImGuiCol_FrameBg`, etc., onto the ImGui style stack.
+2. **`draw()`**: Executes the `ImGui::Checkbox` draw call, passing the internal boolean pointer from the component.
+3. **`popStyle()`**: Pops the specific number of styles pushed in `pushStyle()` to ensure the global ImGui state is not corrupted for subsequent UI elements.

@@ -15,7 +15,7 @@ namespace ui::components
 
         void render() override
         {
-            ui::styling::Slider::render(m_name, this->m_valPtr, m_config.get());
+            ui::styling::Slider<T>(m_name, this->m_valPtr, m_config.get()).render();
         }
 
         T* inputValue() const

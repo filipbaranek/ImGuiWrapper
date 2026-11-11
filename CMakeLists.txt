@@ -36,11 +36,11 @@ set(WRAPPER_SOURCES
     Styling/CheckBox.h
     Styling/Common.h
     Styling/Font.h
-    Styling/InputBox.cpp
     Styling/InputBox.h
     Styling/Label.cpp
     Styling/Label.h
     Styling/Slider.h
+    Styling/Styling.h
     Styling/Window.cpp
     Styling/Window.h
     Utils/ImageLoader.cpp

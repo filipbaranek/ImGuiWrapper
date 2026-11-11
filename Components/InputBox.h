@@ -16,7 +16,7 @@ namespace ui::components
 
         void render() override
         {
-            ui::styling::InputBox::render<T>(m_name, this->m_valPtr, m_config.get());
+            ui::styling::InputBox<T>(m_name, this->m_valPtr, m_config.get()).render();
         }
 
         T* inputValue() const
@@ -36,7 +36,7 @@ namespace ui::components
 
         void render() override
         {
-            ui::styling::InputBox::render<char>(m_name, m_buffer, m_config.get());
+            ui::styling::InputBox<char>(m_name, m_buffer, m_config.get()).render();
         }
 
         char* inputValue()

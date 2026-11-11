@@ -4,9 +4,14 @@
 namespace ui::styling
 {
 
-    void Button::init(ui::components::Button* button, ButtonConfig* config)
+    Button::Button(ui::components::Button* button)
+        : m_button(button)
+        , m_config(dynamic_cast<ButtonConfig*>(button->config()))
+    { }
+
+    void Button::pushStyle()
     {
-        auto* radioButton = dynamic_cast<ui::components::RadioButton*>(button);
+        auto* radioButton = dynamic_cast<ui::components::RadioButton*>(m_button);
         if (radioButton != nullptr)
         {
             if (radioButton->isSelected())
@@ -20,19 +25,19 @@ namespace ui::styling
         }
         else
         {
-            ImGui::PushStyleColor(ImGuiCol_Button, config->background);
+            ImGui::PushStyleColor(ImGuiCol_Button, m_config->background);
         }
-        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, config->onHoverOverColor);
-        ImGui::PushStyleColor(ImGuiCol_ButtonActive, config->onClickColor);
-        ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, config->rounding);
-        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, config->framePadding);
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, m_config->onHoverOverColor);
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, m_config->onClickColor);
+        ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, m_config->rounding);
+        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, m_config->framePadding);
 
         const ImVec2 windowSize = ImGui::GetMainViewport()->Size;
 
-        float realSizeX = windowSize.x * config->size.x;
-        float realSizeY = windowSize.y * config->size.y;
+        float realSizeX = windowSize.x * m_config->size.x;
+        float realSizeY = windowSize.y * m_config->size.y;
 
-        if (config->square)
+        if (m_config->square)
         {
             const float squaredSize = std::min(realSizeX, realSizeY);
 
@@ -40,38 +45,95 @@ namespace ui::styling
             realSizeY = squaredSize;
         }
 
-        config->realSize = ImVec2{realSizeX, realSizeY};
+        m_config->realSize = ImVec2{realSizeX, realSizeY};
 
-        if (config->font != nullptr)
+        if (m_config->font != nullptr)
         {
-            ImGui::PushFont(config->font);
+            ImGui::PushFont(m_config->font);
 
             ImVec2 textSize = ImGui::CalcTextSize("Aa");
 
-            float scaleX = ImGui::GetFontSize() * (config->realSize.x / textSize.x);
-            float scaleY = ImGui::GetFontSize() * (config->realSize.y / textSize.y);
+            float scaleX = ImGui::GetFontSize() * (m_config->realSize.x / textSize.x);
+            float scaleY = ImGui::GetFontSize() * (m_config->realSize.y / textSize.y);
             float scale  = std::min(scaleX, scaleY);
 
             ImGui::SetWindowFontScale(scale);
         }
 
-        config->styles.appliedColorStyles += 3;
-        config->styles.appliedVarStyles   += 2;
+        m_config->styles.appliedColorStyles += 3;
+        m_config->styles.appliedVarStyles   += 2;
     }
 
-    void Button::destroy(ButtonConfig* config)
+    void Button::popStyle()
     {
-        if (config->font != nullptr)
+        if (m_config->font != nullptr)
         {
             ImGui::SetWindowFontScale(1.0f);
             ImGui::PopFont();
         }
 
-        ImGui::PopStyleColor(config->styles.appliedColorStyles);
-        ImGui::PopStyleVar(config->styles.appliedVarStyles);
+        ImGui::PopStyleColor(m_config->styles.appliedColorStyles);
+        ImGui::PopStyleVar(m_config->styles.appliedVarStyles);
 
-        config->styles.appliedColorStyles = 0;
-        config->styles.appliedVarStyles = 0;
+        m_config->styles.appliedColorStyles = 0;
+        m_config->styles.appliedVarStyles = 0;
+    }
+
+    void Button::draw()
+    {
+        const ImVec2 buttonSize = m_config->realSize;
+
+        if (ImGui::Button(m_button->name().c_str(), buttonSize))
+        {
+            m_button->execute();
+        }
+    }
+
+    ImageButton::ImageButton(ui::components::ImageButton* imageButton)
+        : Button(imageButton)
+        , m_imageButton(imageButton)
+    { }
+
+    void ImageButton::draw()
+    {
+        const ImVec2 buttonSize = m_config->realSize;
+
+        if (ImGui::ImageButton(m_imageButton->name().c_str(), m_imageButton->textureID(), buttonSize))
+        {
+            m_imageButton->execute();
+        }
+    }
+
+    RadioButton::RadioButton(ui::components::RadioButton* radioButton)
+        : Button(radioButton)
+        , m_radioButton(radioButton)
+    { }
+
+    void RadioButton::draw()
+    {
+        const ImVec2 buttonSize = m_config->realSize;
+
+        if (ImGui::Button(m_radioButton->name().c_str(), buttonSize))
+        {
+            m_radioButton->select();
+            m_radioButton->execute();
+        }
+    }
+
+    RadioImageButton::RadioImageButton(ui::components::RadioImageButton* radioImageButton)
+        : Button(radioImageButton)
+        , m_radioImageButton(radioImageButton)
+    { }
+
+    void RadioImageButton::draw()
+    {
+        const ImVec2 buttonSize = m_config->realSize;
+
+        if (ImGui::ImageButton(m_radioImageButton->name().c_str(), m_radioImageButton->textureID(), buttonSize))
+        {
+            m_radioImageButton->select();
+            m_radioImageButton->execute();
+        }
     }
 
 } // ui::styling

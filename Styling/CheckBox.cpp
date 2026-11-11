@@ -4,42 +4,37 @@
 namespace ui::styling
 {
 
-    namespace
+    CheckBox::CheckBox(ui::components::CheckBox* checkBox)
+        : m_checkBox(checkBox)
+        , m_config(dynamic_cast<CheckBoxConfig*>(checkBox->config()))
+    { }
+
+    void CheckBox::pushStyle()
     {
+        ImGui::PushStyleColor(ImGuiCol_CheckMark, m_config->checkMarkColor);
+        ImGui::PushStyleColor(ImGuiCol_FrameBg, m_config->background);
+        ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, m_config->hoveredBackground);
+        ImGui::PushStyleColor(ImGuiCol_FrameBgActive, m_config->activeBackground);
+        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, m_config->framePadding);
 
-        void init(ui::components::CheckBox* checkBox, CheckBoxConfig* config)
-        {
-            ImGui::PushStyleColor(ImGuiCol_CheckMark, config->checkMarkColor);
-            ImGui::PushStyleColor(ImGuiCol_FrameBg, config->background);
-            ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, config->hoveredBackground);
-            ImGui::PushStyleColor(ImGuiCol_FrameBgActive, config->activeBackground);
-            ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, config->framePadding);
+        m_config->styles.appliedColorStyles += 4;
+        ++m_config->styles.appliedVarStyles;
+    }
 
-            std::string checkBoxName = "##" + checkBox->name();
-
-            ImGui::Checkbox(checkBoxName.c_str(), checkBox->isChecked());
-
-            config->styles.appliedColorStyles += 4;
-            ++config->styles.appliedVarStyles;
-        }
-
-        void destroy(CheckBoxConfig* config)
-        {
-            ImGui::PopStyleColor(config->styles.appliedColorStyles);
-            ImGui::PopStyleVar(config->styles.appliedVarStyles);
-
-            config->styles.appliedColorStyles = 0;
-            config->styles.appliedVarStyles = 0;
-        }
-
-    } // namespace
-
-    void CheckBox::render(ui::components::CheckBox* checkBox)
+    void CheckBox::popStyle()
     {
-        auto* config = dynamic_cast<CheckBoxConfig*>(checkBox->config());
+        ImGui::PopStyleColor(m_config->styles.appliedColorStyles);
+        ImGui::PopStyleVar(m_config->styles.appliedVarStyles);
 
-        init(checkBox, config);
-        destroy(config);
+        m_config->styles.appliedColorStyles = 0;
+        m_config->styles.appliedVarStyles = 0;
+    }
+
+    void CheckBox::draw()
+    {
+        std::string checkBoxName = "##" + m_checkBox->name();
+
+        ImGui::Checkbox(checkBoxName.c_str(), m_checkBox->isChecked());
     }
 
 } // ui::styling

@@ -2,6 +2,7 @@
 #include <string>
 #include <imgui.h>
 #include "Common.h"
+#include "Styling.h"
 
 namespace ui::components
 {
@@ -20,12 +21,21 @@ namespace ui::styling
         ImVec2         framePadding;
     };
 
-    class CheckBox
+    class CheckBox : public Styling
     {
     public:
-        CheckBox() = delete;
+        CheckBox(ui::components::CheckBox* checkBox);
 
-        static void render(ui::components::CheckBox* checkBox);
+    protected:
+        void pushStyle() override;
+
+        void popStyle() override;
+
+        void draw() override;
+
+    private:
+        ui::components::CheckBox* m_checkBox;
+        CheckBoxConfig*           m_config;
     };
 
 } // ui::styling

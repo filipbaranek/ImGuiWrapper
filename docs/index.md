@@ -38,6 +38,7 @@ Welcome to the ImGuiWrapper library documentation. This library provides an obje
 
 ### 5. Internal Styling API (Advanced)
 *Note: These files outline internal implementation details and interface directly with raw ImGui. They are not intended for direct use.*
+* [Styling: Styling (base class)](Styling/Styling.md)
 * [Styling: Window](Styling/Window.md)
 * [Styling: Button](Styling/Button.md)
 * [Styling: CheckBox](Styling/CheckBox.md)

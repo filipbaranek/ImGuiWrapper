@@ -18,7 +18,7 @@ namespace ui::components
 
     void RadioButton::render()
     {
-        ui::styling::Button::render<ui::ButtonType::RADIO>(this);
+        ui::styling::RadioButton(this).render();
     }
 
     const bool& RadioButton::isSelected() const
