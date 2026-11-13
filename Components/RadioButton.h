@@ -20,7 +20,7 @@ namespace ui::components
 
         const bool& isSelected() const;
 
-        void setIsSelected(const bool& isSelected);
+        void setIsSelected(bool isSelected);
 
         void select();
 

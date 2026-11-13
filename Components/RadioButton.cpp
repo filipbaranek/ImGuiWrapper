@@ -26,7 +26,7 @@ namespace ui::components
         return m_isSelected;
     }
 
-    void RadioButton::setIsSelected(const bool& isSelected)
+    void RadioButton::setIsSelected(bool isSelected)
     {
         m_isSelected = isSelected;
     }
