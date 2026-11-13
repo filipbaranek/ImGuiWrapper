@@ -4,7 +4,7 @@
 
 The `ImageLoader` is a static utility that abstracts the process of loading an image file from the disk and converting it into an OpenGL texture ID that ImGui can render. It relies internally on `stb_image` and `glad`.
 
-*(Note: This is used internally by `ImageButton` and `RadioImageButton`, but can be utilized anywhere an ImGui texture is required).*
+*(Note: This is used internally by `SharedIcon`, which `ImageButton` and `RadioImageButton` get from `IconFactory`, but can be utilized anywhere an ImGui texture is required. Each call loads the file again and creates a new texture; use `IconFactory` to share one).*
 
 ## Public Static Methods
 

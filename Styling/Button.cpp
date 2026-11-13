@@ -97,8 +97,10 @@ namespace ui::styling
     void ImageButton::draw()
     {
         const ImVec2 buttonSize = m_config->realSize;
+        const bool clickedOnButton =
+            m_imageButton->icon()->draw(IconPlacement{m_imageButton->name(), buttonSize});
 
-        if (ImGui::ImageButton(m_imageButton->name().c_str(), m_imageButton->textureID(), buttonSize))
+        if (clickedOnButton)
         {
             m_imageButton->execute();
         }
@@ -128,8 +130,10 @@ namespace ui::styling
     void RadioImageButton::draw()
     {
         const ImVec2 buttonSize = m_config->realSize;
+        const bool clickedOnButton =
+            m_radioImageButton->icon()->draw(IconPlacement{m_radioImageButton->name(), buttonSize});
 
-        if (ImGui::ImageButton(m_radioImageButton->name().c_str(), m_radioImageButton->textureID(), buttonSize))
+        if (clickedOnButton)
         {
             m_radioImageButton->select();
             m_radioImageButton->execute();

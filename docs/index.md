@@ -42,6 +42,7 @@ Welcome to the ImGuiWrapper library documentation. This library provides an obje
 * [Styling: Window](Styling/Window.md)
 * [Styling: Button](Styling/Button.md)
 * [Styling: CheckBox](Styling/CheckBox.md)
+* [Styling: Icon & IconFactory](Styling/Icon.md)
 * [Styling: InputBox](Styling/InputBox.md)
 * [Styling: Label](Styling/Label.md)
 * [Styling: Slider](Styling/Slider.md)

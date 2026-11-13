@@ -4,7 +4,7 @@
 * `#include <Components/ImageButton.h>`
 * `#include <Builders/UIButtonBuilder.h>` (for configuration)
 
-The `ImageButton` component extends `Button`. Instead of displaying text, it uses the library's `ImageLoader` to render an OpenGL texture (image) loaded from a specified file path.
+The `ImageButton` component extends `Button`. Instead of displaying text, it draws an icon loaded from a specified file path. The icon comes from `IconFactory`, so buttons that use the same file share one texture and the file is loaded only once. See [Icon](../Styling/Icon.md).
 
 ## Configuration
 
@@ -18,14 +18,14 @@ The `ImageButton` component extends `Button`. Instead of displaying text, it use
 When calling `emplaceComponent<ImageButton>(layout, args...)`, the `args...` map to:
 
 1. **`name`** (`const std::string&`): The ImGui ID for the button.
-2. **`iconFilePath`** (`const std::string&`): The system file path to the image/icon to be loaded.
+2. **`iconFilePath`** (`const std::string&`): The system file path to the image/icon. It is loaded on first use and shared afterwards.
 3. **`config`** (`std::shared_ptr<ui::styling::IConfig>`): The styling configuration.
 4. **`action`** (`std::function<void(Button*)>`): The callback executed when the button is clicked.
 
 ### Additional Class Methods (`ui::components::ImageButton`)
 
-* **`const int textureID() const`**
-  Returns the generated OpenGL texture ID used by the underlying image loader.
+* **`ui::styling::Icon* icon() const`**
+  Returns the shared icon this button draws. The icon is owned by `IconFactory`, not by the button.
 
 ## Example Usage
 

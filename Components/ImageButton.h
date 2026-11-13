@@ -1,7 +1,6 @@
 #pragma once
-#include <imgui.h>
 #include "Button.h"
-#include "Utils/ImageLoader.h"
+#include "Styling/Icon.h"
 
 namespace ui::components
 {
@@ -19,10 +18,10 @@ namespace ui::components
 
         void render() override;
 
-        const int textureID() const;
+        ui::styling::Icon* icon() const;
 
     private:
-        ImTextureID m_textureID;
+        ui::styling::Icon* m_icon;
     };
 
 } // ui::components
