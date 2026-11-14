@@ -10,7 +10,7 @@ Supported types are `int` and `float`.
 
 ## Configuration (`SliderConfigBuilder<T>`)
 
-To style a `Slider`, generate a `std::shared_ptr<ui::styling::SliderConfig<T>>` using the `SliderConfigBuilder<T>`.
+To style a `Slider`, generate its configuration using the `SliderConfigBuilder<T>`.
 
 | Builder Method | Description |
 | :--- | :--- |
@@ -22,7 +22,7 @@ To style a `Slider`, generate a `std::shared_ptr<ui::styling::SliderConfig<T>>` 
 | `onActiveBackground(const ImVec4&)` | The background color of the slider track when actively clicked/dragged. |
 | `grabBackground(const ImVec4&)` | The default color of the slider grab handle. |
 | `onGrabActiveBackground(const ImVec4&)`| The color of the slider grab handle while it is being dragged. |
-| **`build()`** | **Returns `std::shared_ptr<ui::styling::SliderConfig<T>>` to be passed to the component.** |
+| **`build()`** | **Returns `std::shared_ptr<ui::styling::IConfig>` to be passed to the component.** |
 
 ## Component Instantiation
 

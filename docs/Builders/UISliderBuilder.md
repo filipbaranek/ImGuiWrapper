@@ -2,7 +2,7 @@
 
 **Header:** `#include <Builders/UISliderBuilder.h>`
 
-The `SliderConfigBuilder<T>` is a templated builder used to construct the configuration object required by the `Slider<T>` component. You must specify the type (`int` or `float`) when instantiating the builder.
+The `SliderConfigBuilder<T>` is a templated builder used to construct the configuration object required by the `Slider<T>` component. You must specify the type (`int` or `float`) when instantiating the builder. It implements [`ConfigBuilder`](UIConfigBuilder.md), so it can also be used with a [`StyleDirector`](UIStyleDirector.md).
 
 ## Methods
 
@@ -16,7 +16,7 @@ The `SliderConfigBuilder<T>` is a templated builder used to construct the config
 | `onActiveBackground(...)` | Track color when actively clicked/dragged. |
 | `grabBackground(...)` | Default color of the grab handle itself. |
 | `onGrabActiveBackground(...)`| Color of the grab handle while it is being dragged. |
-| **`build()`** | **Returns `std::shared_ptr<ui::styling::SliderConfig<T>>`** |
+| **`build()`** | **Returns `std::shared_ptr<ui::styling::IConfig>` holding a `SliderConfig<T>`** |
 
 ## Example Usage
 

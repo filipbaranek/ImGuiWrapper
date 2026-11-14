@@ -2,7 +2,7 @@
 
 **Header:** `#include <Builders/UIButtonBuilder.h>`
 
-The `ButtonConfigBuilder` is used to construct the configuration object required by `Button`, `ImageButton`, `RadioButton`, and `RadioImageButton`.
+The `ButtonConfigBuilder` is used to construct the configuration object required by `Button`, `ImageButton`, `RadioButton`, and `RadioImageButton`. It implements [`ConfigBuilder`](UIConfigBuilder.md), so it can also be used with a [`StyleDirector`](UIStyleDirector.md).
 
 ## Methods
 
@@ -13,10 +13,10 @@ The `ButtonConfigBuilder` is used to construct the configuration object required
 | `font(ImFont*)` | Pointer to an ImGui font. Text automatically scales to fit the button. |
 | `size(const ImVec2&)` | The responsive size relative to the viewport (e.g., `0.04f` = 4%). |
 | `background(const ImVec4&)` | The default background color. |
-| `onHoverColor(const ImVec4&)` | Background color when the mouse hovers over the button. |
-| `onClickColor(const ImVec4&)` | Background color when the button is actively clicked. |
+| `onHoverBackground(const ImVec4&)` | Background color when the mouse hovers over the button. |
+| `onActiveBackground(const ImVec4&)` | Background color when the button is actively clicked. |
 | `framePadding(const ImVec2&)` | Internal padding between the border and the content. |
-| **`build()`** | **Returns `std::shared_ptr<ui::styling::ButtonConfig>`** |
+| **`build()`** | **Returns `std::shared_ptr<ui::styling::IConfig>` holding a `ButtonConfig`** |
 
 ## Example Usage
 
@@ -30,6 +30,6 @@ auto btnConfig = ButtonConfigBuilder()
     .background(ui::styling::Color::darkGray)
     .font(ui::styling::Font::regular(0.8f))
     .size(ImVec2{ 0.04f, 0.02f })
-    .onHoverColor(ui::styling::Color::hoverOverOrange)
-    .onClickColor(ui::styling::Color::onClickOrange)
+    .onHoverBackground(ui::styling::Color::hoverOverOrange)
+    .onActiveBackground(ui::styling::Color::onClickOrange)
     .build();

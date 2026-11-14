@@ -8,7 +8,7 @@ The `CheckBox` component represents a standard boolean toggle UI element. It dis
 
 ## Configuration (`CheckBoxConfigBuilder`)
 
-To style a `CheckBox`, you must generate a `std::shared_ptr<ui::styling::CheckBoxConfig>` using the `CheckBoxConfigBuilder`.
+To style a `CheckBox`, you must generate its configuration using the `CheckBoxConfigBuilder`.
 
 > **Styling Helpers:** 
 > Use predefined colors from `ui::styling::Color` located in `<Styling/Common.h>`.
@@ -20,7 +20,7 @@ To style a `CheckBox`, you must generate a `std::shared_ptr<ui::styling::CheckBo
 | `onActiveBackground(const ImVec4&)` | The background color of the frame while actively clicked/pressed. |
 | `checkMarkColor(const ImVec4&)` | The color of the checkmark icon when the box is toggled on. |
 | `framePadding(const ImVec2&)` | Internal padding applied to the checkbox frame. |
-| **`build()`** | **Returns `std::shared_ptr<ui::styling::CheckBoxConfig>` to be passed to the component.** |
+| **`build()`** | **Returns `std::shared_ptr<ui::styling::IConfig>` to be passed to the component.** |
 
 ## Component Instantiation
 

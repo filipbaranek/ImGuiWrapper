@@ -2,7 +2,7 @@
 
 **Header:** `#include <Builders/UICheckBoxBuilder.h>`
 
-The `CheckBoxConfigBuilder` is used to construct the configuration object required by the `CheckBox` component.
+The `CheckBoxConfigBuilder` is used to construct the configuration object required by the `CheckBox` component. It implements [`ConfigBuilder`](UIConfigBuilder.md), so it can also be used with a [`StyleDirector`](UIStyleDirector.md).
 
 ## Methods
 
@@ -13,7 +13,7 @@ The `CheckBoxConfigBuilder` is used to construct the configuration object requir
 | `onActiveBackground(const ImVec4&)` | Background color when actively clicked. |
 | `checkMarkColor(const ImVec4&)` | The color of the checkmark icon when the box is toggled on. |
 | `framePadding(const ImVec2&)` | Internal padding applied to the frame. |
-| **`build()`** | **Returns `std::shared_ptr<ui::styling::CheckBoxConfig>`** |
+| **`build()`** | **Returns `std::shared_ptr<ui::styling::IConfig>` holding a `CheckBoxConfig`** |
 
 ## Example Usage
 

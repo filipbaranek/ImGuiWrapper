@@ -10,7 +10,7 @@ The `Button` component represents a standard clickable UI button. When clicked, 
 
 ## Configuration (`ButtonConfigBuilder`)
 
-To style a `Button`, you must generate a `std::shared_ptr<ui::styling::ButtonConfig>` using the `ButtonConfigBuilder`.
+To style a `Button`, you must generate its configuration using the `ButtonConfigBuilder`.
 
 > **Styling Helpers:** 
 > Instead of manually creating ImGui fonts and color vectors, you can easily use the library's predefined styling utilities:
@@ -24,10 +24,10 @@ To style a `Button`, you must generate a `std::shared_ptr<ui::styling::ButtonCon
 | `font(ImFont*)` | Pointer to an ImGui font. Easily obtained via `ui::styling::Font`. Text automatically scales to fit the button. |
 | `size(const ImVec2&)` | The responsive size of the button relative to the viewport size (e.g., `0.04f` = 4%). |
 | `background(const ImVec4&)` | The default background color. Easily obtained via `ui::styling::Color`. |
-| `onHoverColor(const ImVec4&)` | The background color when hovered by the mouse. |
-| `onClickColor(const ImVec4&)` | The background color while actively clicked/pressed. |
+| `onHoverBackground(const ImVec4&)` | The background color when hovered by the mouse. |
+| `onActiveBackground(const ImVec4&)` | The background color while actively clicked/pressed. |
 | `framePadding(const ImVec2&)` | Internal padding between the button border and its text. |
-| **`build()`** | **Returns `std::shared_ptr<ui::styling::ButtonConfig>` to be passed to the component.** |
+| **`build()`** | **Returns `std::shared_ptr<ui::styling::IConfig>` to be passed to the component.** |
 
 ## Component Instantiation
 
@@ -79,8 +79,8 @@ protected:
             .background(ui::styling::Color::darkGray)
             .font(ui::styling::Font::regular(0.8f))
             .size(ImVec2{ 0.04f, 0.02f })
-            .onHoverColor(ui::styling::Color::hoverOverOrange)
-            .onClickColor(ui::styling::Color::onClickOrange)
+            .onHoverBackground(ui::styling::Color::hoverOverOrange)
+            .onActiveBackground(ui::styling::Color::onClickOrange)
             .build();
 
         // 2. Create a layout and reserve space

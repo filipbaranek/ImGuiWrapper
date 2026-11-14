@@ -48,7 +48,7 @@ protected:
         auto iconConfig = ButtonConfigBuilder()
             .size(ImVec2{0.03f, 0.03f})
             .background(ui::styling::Color::transparentGray)
-            .onHoverColor(ui::styling::Color::hoverOverOrange)
+            .onHoverBackground(ui::styling::Color::hoverOverOrange)
             .build();
 
         ui::components::Layout* layout = emplaceLayout();

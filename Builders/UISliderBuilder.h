@@ -1,8 +1,9 @@
 #pragma once
+#include <Builders/UIConfigBuilder.h>
 #include <Styling/Slider.h>
 
 template<typename T>
-class SliderConfigBuilder
+class SliderConfigBuilder : public ConfigBuilder
 {
 public:
     SliderConfigBuilder()
@@ -30,19 +31,19 @@ public:
         return *this;
     }
 
-    SliderConfigBuilder& background(const ImVec4& background)
+    SliderConfigBuilder& background(const ImVec4& background) override
     {
         m_config.background = background;
         return *this;
     }
 
-    SliderConfigBuilder& onHoverBackground(const ImVec4& background)
+    SliderConfigBuilder& onHoverBackground(const ImVec4& background) override
     {
         m_config.onHoverBackground = background;
         return *this;
     }
 
-    SliderConfigBuilder& onActiveBackground(const ImVec4& background)
+    SliderConfigBuilder& onActiveBackground(const ImVec4& background) override
     {
         m_config.onActiveBackground = background;
         return *this;
@@ -60,7 +61,7 @@ public:
         return *this;
     }
 
-    std::shared_ptr<ui::styling::SliderConfig<T>> build()
+    std::shared_ptr<ui::styling::IConfig> build() override
     {
         return std::make_shared<ui::styling::SliderConfig<T>>(std::move(m_config));
     }
