@@ -1,28 +1,27 @@
 #pragma once
 #include <utility>
-#include <Builders/UIConfigBuilder.h>
 #include <Styling/CheckBox.h>
 
-class CheckBoxConfigBuilder : public ConfigBuilder
+class CheckBoxConfigBuilder
 {
 public:
     CheckBoxConfigBuilder()
         : m_config{}
     { }
 
-    CheckBoxConfigBuilder& background(const ImVec4& background) override
+    CheckBoxConfigBuilder& background(const ImVec4& background)
     {
         m_config.background = background;
         return *this;
     }
 
-    CheckBoxConfigBuilder& onHoverBackground(const ImVec4& background) override
+    CheckBoxConfigBuilder& onHoverBackground(const ImVec4& background)
     {
         m_config.hoveredBackground = background;
         return *this;
     }
 
-    CheckBoxConfigBuilder& onActiveBackground(const ImVec4& background) override
+    CheckBoxConfigBuilder& onActiveBackground(const ImVec4& background)
     {
         m_config.activeBackground = background;
         return *this;
@@ -40,7 +39,7 @@ public:
         return *this;
     }
 
-    std::shared_ptr<ui::styling::IConfig> build() override
+    std::shared_ptr<ui::styling::CheckBoxConfig> build()
     {
         return std::make_shared<ui::styling::CheckBoxConfig>(std::move(m_config));
     }

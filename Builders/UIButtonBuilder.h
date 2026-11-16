@@ -1,9 +1,8 @@
 #pragma once
 #include <utility>
-#include <Builders/UIConfigBuilder.h>
 #include <Styling/Button.h>
 
-class ButtonConfigBuilder : public ConfigBuilder
+class ButtonConfigBuilder
 {
 public:
     ButtonConfigBuilder()
@@ -28,21 +27,21 @@ public:
         return *this;
     }
 
-    ButtonConfigBuilder& background(const ImVec4& background) override
+    ButtonConfigBuilder& background(const ImVec4& background)
     {
         m_config.background = background;
         return *this;
     }
 
-    ButtonConfigBuilder& onHoverBackground(const ImVec4& background) override
+    ButtonConfigBuilder& onHoverColor(const ImVec4& onHoverColor)
     {
-        m_config.onHoverOverColor = background;
+        m_config.onHoverOverColor = onHoverColor;
         return *this;
     }
 
-    ButtonConfigBuilder& onActiveBackground(const ImVec4& background) override
+    ButtonConfigBuilder& onClickColor(const ImVec4& onClickColor)
     {
-        m_config.onClickColor = background;
+        m_config.onClickColor = onClickColor;
         return *this;
     }
 
@@ -58,7 +57,7 @@ public:
         return *this;
     }
 
-    std::shared_ptr<ui::styling::IConfig> build() override
+    std::shared_ptr<ui::styling::ButtonConfig> build()
     {
         return std::make_shared<ui::styling::ButtonConfig>(std::move(m_config));
     }

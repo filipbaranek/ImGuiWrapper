@@ -25,8 +25,6 @@ Welcome to the ImGuiWrapper library documentation. This library provides an obje
 
 ### 3. Builders
 * [UIWindowBuilder](Builders/UIWindowBuilder.md)
-* [UIConfigBuilder](Builders/UIConfigBuilder.md)
-* [UIStyleDirector](Builders/UIStyleDirector.md)
 * [UIButtonBuilder](Builders/UIButtonBuilder.md)
 * [UICheckBoxBuilder](Builders/UICheckBoxBuilder.md)
 * [UIInputBoxBuilder](Builders/UIInputBoxBuilder.md)
@@ -59,4 +57,4 @@ The library operates on a `Window` -> `Layout` -> `Component` hierarchy, where a
 2. Inside your custom Window's `initWindowConfig()` method, you define its size, position, and colors using the `WindowConfigBuilder`.
 3. Inside the `initComponents()` method, you create **Layouts** using `emplaceLayout()`.
 4. You populate these Layouts with **Components** (like buttons, sliders, etc.) using `emplaceComponent<T>()`. 
-5. Component styling is handled entirely via dedicated **Builders** (e.g., `ButtonConfigBuilder`) to cleanly separate rendering logic from state logic. Recurring color recipes can be applied to any of the button, checkbox and slider builders with a `StyleDirector`.
+5. Component styling is handled entirely via dedicated **Builders** (e.g., `ButtonConfigBuilder`) to cleanly separate rendering logic from state logic.

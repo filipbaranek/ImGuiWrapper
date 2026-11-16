@@ -86,7 +86,7 @@ protected:
         auto btnConfig = ButtonConfigBuilder()
             .size(ImVec2{0.05f, 0.03f})
             .background(ui::styling::Color::lightGray)
-            .onHoverBackground(ui::styling::Color::hoverOverOrange)
+            .onHoverColor(ui::styling::Color::hoverOverOrange)
             .build();
 
         // Create a layout group
