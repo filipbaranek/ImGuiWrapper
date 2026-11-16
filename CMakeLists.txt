@@ -6,6 +6,10 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
 endif()
 
 set(WRAPPER_SOURCES
+    Bindings/Binding.h
+    Bindings/ClampedBinding.h
+    Bindings/ReferenceBinding.h
+    Bindings/StoredBinding.h
     Components/Button.cpp
     Components/Button.h
     Components/CheckBox.cpp
@@ -18,7 +22,6 @@ set(WRAPPER_SOURCES
     Components/Label.cpp
     Components/Label.h
     Components/Layout.h
-    Components/Linkable.h
     Components/RadioButton.cpp
     Components/RadioButton.h
     Components/RadioGroup.cpp

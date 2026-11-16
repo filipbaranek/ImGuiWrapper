@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include "Common.h"
 #include "Styling.h"
+#include "Bindings/Binding.h"
 
 namespace ui::styling
 {
@@ -17,7 +18,7 @@ namespace ui::styling
     class InputBox : public Styling
     {
     public:
-        InputBox(const std::string& name, T* value, IConfig* config)
+        InputBox(const std::string& name, ui::bindings::Binding<T>& value, IConfig* config)
             : m_name(name)
             , m_value(value)
             , m_config(dynamic_cast<InputBoxConfig*>(config))
@@ -42,9 +43,9 @@ namespace ui::styling
         void draw() override;
 
     private:
-        const std::string& m_name;
-        T*                 m_value;
-        InputBoxConfig*    m_config;
+        const std::string&        m_name;
+        ui::bindings::Binding<T>& m_value;
+        InputBoxConfig*           m_config;
     };
 
     template<typename T>
@@ -56,27 +57,45 @@ namespace ui::styling
     template<>
     inline void InputBox<int>::draw()
     {
-        ImGui::InputInt(m_name.c_str(), m_value, 0);
+        int value = m_value.get();
+        if (ImGui::InputInt(m_name.c_str(), &value, 0))
+        {
+            m_value.set(value);
+        }
     }
 
     template<>
     inline void InputBox<float>::draw()
     {
-        ImGui::InputFloat(m_name.c_str(), m_value, 0.0f);
+        float value = m_value.get();
+        if (ImGui::InputFloat(m_name.c_str(), &value, 0.0f))
+        {
+            m_value.set(value);
+        }
     }
 
     template<>
     inline void InputBox<double>::draw()
     {
-        ImGui::InputDouble(m_name.c_str(), m_value, 0.0);
+        double value = m_value.get();
+        if (ImGui::InputDouble(m_name.c_str(), &value, 0.0))
+        {
+            m_value.set(value);
+        }
     }
 
     template<>
-    inline void InputBox<char>::draw()
+    inline void InputBox<std::string>::draw()
     {
         static constexpr int bufferSize = 256;
 
-        ImGui::InputText(m_name.c_str(), m_value, bufferSize, 0);
+        char buffer[bufferSize]{};
+        m_value.get().copy(buffer, bufferSize - 1);
+
+        if (ImGui::InputText(m_name.c_str(), buffer, bufferSize))
+        {
+            m_value.set(buffer);
+        }
     }
 
 } // ui::styling

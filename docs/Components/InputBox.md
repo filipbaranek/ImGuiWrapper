@@ -3,14 +3,15 @@
 **Headers:** 
 * `#include <Components/InputBox.h>`
 * `#include <Builders/UIInputBoxBuilder.h>` (for configuration)
+* `#include <Bindings/...>` (for the value, see [Bindings](../Bindings/Binding.md))
 
-The `InputBox` is a templated UI component that allows the user to input data via the keyboard. It inherits from `Component` and `Linkable<T>`.
+The `InputBox` is a templated UI component that allows the user to input data via the keyboard. It inherits from `Component`. The edited value is not stored in the component: it is read from and written to the [binding](../Bindings/Binding.md) passed into the constructor.
 
 Supported types are:
 * `int`
 * `float`
 * `double`
-* `char` (Specialized template representing a 256-character text buffer)
+* `std::string` (text input limited to 255 characters)
 
 ## Configuration (`InputBoxBuilder`)
 
@@ -30,20 +31,16 @@ When calling `emplaceComponent<InputBox<T>>(layout, args...)`, the `args...` map
 
 1. **`name`** (`const std::string&`): The unique ImGui ID for the component. 
    *(Note: The library internally prefixes this name with `##` to hide ImGui's default label rendering. If you want a label, instantiate a separate `Label` component alongside this one).*
-2. **`config`** (`std::shared_ptr<ui::styling::IConfig>`): The configuration object built via `InputBoxBuilder`.
-
-### Additional Class Methods (`ui::components::InputBox<T>`)
-
-* **`T* inputValue() const`** (For `int`, `float`, `double`)
-  Returns a pointer to the underlying primitive value holding the user's input. Dereference to read or write default values.
-* **`char* inputValue()`** (For `char` specialization)
-  Returns a pointer to the internal character buffer.
+2. **`value`** (`std::shared_ptr<ui::bindings::Binding<T>>`): The binding holding the value. Mandatory, passing `nullptr` throws `std::logic_error`.
+3. **`config`** (`std::shared_ptr<ui::styling::IConfig>`): The configuration object built via `InputBoxBuilder`.
 
 ## Example Usage
 
 ```cpp
 #include <Components/Window.h>
 #include <Components/InputBox.h>
+#include <Bindings/StoredBinding.h>
+#include <Bindings/ReferenceBinding.h>
 #include <Builders/UIInputBoxBuilder.h>
 #include <Styling/Common.h>
 
@@ -57,19 +54,24 @@ protected:
 
     void initComponents() override
     {
+        using namespace ui::bindings;
+
         auto inputBoxConfig = InputBoxBuilder()
             .width(0.17f)
             .background(ui::styling::Color::lightGray)
             .build();
 
+        m_size = std::make_shared<StoredBinding<int>>(1);
+
         ui::components::Layout* layout = emplaceLayout();
         layout->reserveComponents(2);
 
-        // 1. Integer Input
-        auto* sizeInput = emplaceComponent<ui::components::InputBox<int>>(layout, "SizeInput", inputBoxConfig);
-        *sizeInput->inputValue() = 1; // Set default value
-
-        // 2. Text Input
-        auto* apiKeyInput = emplaceComponent<ui::components::InputBox<char>>(layout, "ApiKeyInput", inputBoxConfig);
+        emplaceComponent<ui::components::InputBox<int>>(layout, "SizeInput", m_size, inputBoxConfig);
+        emplaceComponent<ui::components::InputBox<std::string>>(layout, "ApiKeyInput", std::make_shared<ReferenceBinding<std::string>>(m_apiKey), inputBoxConfig);
     }
+
+private:
+    std::shared_ptr<ui::bindings::StoredBinding<int>> m_size;
+    std::string                                       m_apiKey;
 };
+```

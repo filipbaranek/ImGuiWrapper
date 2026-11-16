@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
+#include <stdexcept>
 #include "Common.h"
 #include "Styling.h"
+#include "Bindings/Binding.h"
 
 namespace ui::styling
 {
@@ -23,7 +25,7 @@ namespace ui::styling
     class Slider : public Styling
     {
     public:
-        Slider(const std::string& name, T* value, IConfig* config)
+        Slider(const std::string& name, ui::bindings::Binding<T>& value, IConfig* config)
             : m_name(name)
             , m_value(value)
             , m_config(dynamic_cast<SliderConfig<T>*>(config))
@@ -52,9 +54,9 @@ namespace ui::styling
         void draw() override;
 
     private:
-        const std::string& m_name;
-        T*                 m_value;
-        SliderConfig<T>*   m_config;
+        const std::string&        m_name;
+        ui::bindings::Binding<T>& m_value;
+        SliderConfig<T>*          m_config;
     };
 
     template<typename T>
@@ -66,13 +68,21 @@ namespace ui::styling
     template<>
     inline void Slider<int>::draw()
     {
-        ImGui::SliderInt(m_name.c_str(), m_value, m_config->min, m_config->max);
+        int value = m_value.get();
+        if (ImGui::SliderInt(m_name.c_str(), &value, m_config->min, m_config->max))
+        {
+            m_value.set(value);
+        }
     }
 
     template<>
     inline void Slider<float>::draw()
     {
-        ImGui::SliderFloat(m_name.c_str(), m_value, m_config->min, m_config->max);
+        float value = m_value.get();
+        if (ImGui::SliderFloat(m_name.c_str(), &value, m_config->min, m_config->max))
+        {
+            m_value.set(value);
+        }
     }
 
 } // ui::comopnents

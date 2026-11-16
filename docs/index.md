@@ -8,7 +8,7 @@ Welcome to the ImGuiWrapper library documentation. This library provides an obje
 * [Window](Components/Window.md)
 * [Layout](Components/Layout.md)
 * [Component](Components/Component.md)
-* [Linkable](Components/Linkable.md)
+* [Bindings](Bindings/Binding.md)
 
 ### 2. UI Components
 * [Button](Components/Button.md)
