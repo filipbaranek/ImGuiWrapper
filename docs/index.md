@@ -8,7 +8,8 @@ Welcome to the ImGuiWrapper library documentation. This library provides an obje
 * [Window](Components/Window.md)
 * [Layout](Components/Layout.md)
 * [Component](Components/Component.md)
-* [Linkable](Components/Linkable.md)
+* [Bindings](Bindings/Binding.md)
+* [Placements](Placements/Placement.md)
 
 ### 2. UI Components
 * [Button](Components/Button.md)
@@ -19,6 +20,7 @@ Welcome to the ImGuiWrapper library documentation. This library provides an obje
 * [Label](Components/Label.md)
 * [RadioButton](Components/RadioButton.md)
 * [RadioImageButton](Components/RadioImageButton.md)
+* [RadioGroup](Components/RadioGroup.md)
 * [Spacing Helpers (SameLine & Separator)](Components/SpacingHelpers.md)
 * [Slider](Components/Slider.md)
 
@@ -37,9 +39,11 @@ Welcome to the ImGuiWrapper library documentation. This library provides an obje
 
 ### 5. Internal Styling API (Advanced)
 *Note: These files outline internal implementation details and interface directly with raw ImGui. They are not intended for direct use.*
+* [Styling: Styling (base class)](Styling/Styling.md)
 * [Styling: Window](Styling/Window.md)
 * [Styling: Button](Styling/Button.md)
 * [Styling: CheckBox](Styling/CheckBox.md)
+* [Styling: Icon & IconFactory](Styling/Icon.md)
 * [Styling: InputBox](Styling/InputBox.md)
 * [Styling: Label](Styling/Label.md)
 * [Styling: Slider](Styling/Slider.md)
@@ -48,10 +52,10 @@ Welcome to the ImGuiWrapper library documentation. This library provides an obje
 
 ## Architecture Overview
 
-The library operates on a strict `Window` -> `Layout` -> `Component` hierarchy:
+The library operates on a `Window` -> `Layout` -> `Component` hierarchy, where a `Layout` is itself a `Component` and can contain other layouts:
 
 1. **Windows** dictate the main ImGui context. You create a custom layer by inheriting from `ui::components::Window`.
-2. Inside your custom Window's `initWindowConfig()` method, you define its size, position, and colors using the `WindowConfigBuilder`.
+2. Inside your custom Window's `initWindowConfig()` method, you define its size and colors using the `WindowConfigBuilder`, and in `createPlacement()` you decide where it is placed on the screen.
 3. Inside the `initComponents()` method, you create **Layouts** using `emplaceLayout()`.
 4. You populate these Layouts with **Components** (like buttons, sliders, etc.) using `emplaceComponent<T>()`. 
 5. Component styling is handled entirely via dedicated **Builders** (e.g., `ButtonConfigBuilder`) to cleanly separate rendering logic from state logic.

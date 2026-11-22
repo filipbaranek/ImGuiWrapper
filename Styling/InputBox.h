@@ -2,6 +2,8 @@
 #include <string>
 #include <stdexcept>
 #include "Common.h"
+#include "Styling.h"
+#include "Bindings/Binding.h"
 
 namespace ui::styling
 {
@@ -12,66 +14,88 @@ namespace ui::styling
         ImVec4 background;
     };
 
-    class InputBox
+    template<typename T>
+    class InputBox : public Styling
     {
     public:
-        InputBox() = delete;
+        InputBox(const std::string& name, ui::bindings::Binding<T>& value, IConfig* config)
+            : m_name(name)
+            , m_value(value)
+            , m_config(dynamic_cast<InputBoxConfig*>(config))
+        { }
 
-        template<typename T>
-        static void render(const std::string& name, T* value, IConfig* config);
+    protected:
+        void pushStyle() override
+        {
+            ImGui::PushStyleColor(ImGuiCol_FrameBg, m_config->background);
+            ImGui::SetNextItemWidth(m_config->width * ImGui::GetWindowSize().x);
+
+            ++m_config->styles.appliedColorStyles;
+        }
+
+        void popStyle() override
+        {
+            ImGui::PopStyleColor(m_config->styles.appliedColorStyles);
+
+            m_config->styles.appliedColorStyles = 0;
+        }
+
+        void draw() override;
 
     private:
-        static void initConfig(IConfig* config);
-
-        static void destroy(IConfig* config);
+        const std::string&        m_name;
+        ui::bindings::Binding<T>& m_value;
+        InputBoxConfig*           m_config;
     };
 
     template<typename T>
-    inline void InputBox::render(const std::string&, T*, IConfig*)
+    inline void InputBox<T>::draw()
     {
         throw std::logic_error("Unsupported type for input box");
     }
 
     template<>
-    inline void InputBox::render<int>(const std::string& name, int* value, IConfig* config)
+    inline void InputBox<int>::draw()
     {
-        initConfig(config);
-
-        ImGui::InputInt(name.c_str(), value, 0);
-
-        destroy(config);
+        int value = m_value.get();
+        if (ImGui::InputInt(m_name.c_str(), &value, 0))
+        {
+            m_value.set(value);
+        }
     }
 
     template<>
-    inline void InputBox::render<float>(const std::string& name, float* value, IConfig* config)
+    inline void InputBox<float>::draw()
     {
-        initConfig(config);
-
-        ImGui::InputFloat(name.c_str(), value, 0.0f);
-
-        destroy(config);
+        float value = m_value.get();
+        if (ImGui::InputFloat(m_name.c_str(), &value, 0.0f))
+        {
+            m_value.set(value);
+        }
     }
 
     template<>
-    inline void InputBox::render<double>(const std::string& name, double* value, IConfig* config)
+    inline void InputBox<double>::draw()
     {
-        initConfig(config);
-
-        ImGui::InputDouble(name.c_str(), value, 0.0);
-
-        destroy(config);
+        double value = m_value.get();
+        if (ImGui::InputDouble(m_name.c_str(), &value, 0.0))
+        {
+            m_value.set(value);
+        }
     }
 
     template<>
-    inline void InputBox::render<char>(const std::string& name, char* value, IConfig* config)
+    inline void InputBox<std::string>::draw()
     {
-        initConfig(config);
-
         static constexpr int bufferSize = 256;
 
-        ImGui::InputText(name.c_str(), value, bufferSize, 0);
+        char buffer[bufferSize]{};
+        m_value.get().copy(buffer, bufferSize - 1);
 
-        destroy(config);
+        if (ImGui::InputText(m_name.c_str(), buffer, bufferSize))
+        {
+            m_value.set(buffer);
+        }
     }
 
 } // ui::styling

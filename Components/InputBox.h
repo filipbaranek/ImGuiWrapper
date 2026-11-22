@@ -1,53 +1,37 @@
 #pragma once
+#include <memory>
+#include <stdexcept>
+#include "Bindings/Binding.h"
 #include "Components/Component.h"
-#include "Components/Linkable.h"
 #include "Styling/InputBox.h"
 
 namespace ui::components
 {
-    
+
     template<typename T>
-    class InputBox : public Component, public Linkable<T>
+    class InputBox : public Component
     {
     public:
-        InputBox(const std::string& name, std::shared_ptr<ui::styling::IConfig> config)
+        InputBox(
+            const std::string&                        name,
+            std::shared_ptr<ui::bindings::Binding<T>> value,
+            std::shared_ptr<ui::styling::IConfig>     config)
             : Component("##" + name, std::move(config))
-        { }
+            , m_value(std::move(value))
+        {
+            if (m_value == nullptr)
+            {
+                throw std::logic_error("InputBox construction error: value binding is mandatory");
+            }
+        }
 
         void render() override
         {
-            ui::styling::InputBox::render<T>(m_name, this->m_valPtr, m_config.get());
-        }
-
-        T* inputValue() const
-        {
-            return this->m_valPtr;
-        }
-    };
-
-    template<>
-    class InputBox<char> : public Component
-    {
-    public:
-        InputBox(const std::string& name, std::shared_ptr<ui::styling::IConfig> config)
-            : Component("##" + name, std::move(config))
-            , m_buffer{}
-        { }
-
-        void render() override
-        {
-            ui::styling::InputBox::render<char>(m_name, m_buffer, m_config.get());
-        }
-
-        char* inputValue()
-        {
-            return m_buffer;
+            ui::styling::InputBox<T>(m_name, *m_value, m_config.get()).render();
         }
 
     private:
-        static constexpr int BUFFER_SIZE = 256;
-        
-        char m_buffer[BUFFER_SIZE];
+        std::shared_ptr<ui::bindings::Binding<T>> m_value;
     };
 
 } // ui::components

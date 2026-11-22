@@ -10,7 +10,7 @@ namespace ui::components
 
     void Label::render()
     {
-        ui::styling::Label::render(this);
+        ui::styling::Label(this).render();
     }
 
 } // ui::components

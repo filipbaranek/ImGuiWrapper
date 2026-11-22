@@ -4,41 +4,36 @@
 namespace ui::styling
 {
 
-    namespace
+    Label::Label(ui::components::Label* label)
+        : m_label(label)
+        , m_config(dynamic_cast<LabelConfig*>(label->config()))
+    { }
+
+    void Label::pushStyle()
     {
+        const ImVec2 windowSize = ImGui::GetMainViewport()->Size;
 
-        void init(ui::components::Label* label, LabelConfig* config)
-        {
-            const ImVec2 windowSize = ImGui::GetMainViewport()->Size;
+        ImGui::PushFont(m_config->font);
 
-            ImGui::PushFont(config->font);
+        ImVec2 textSize = ImGui::CalcTextSize("Aa");
 
-            ImVec2 textSize = ImGui::CalcTextSize("Aa");
+        float scaleX = ImGui::GetFontSize() * (windowSize.x / textSize.x);
+        float scaleY = ImGui::GetFontSize() * (windowSize.y / textSize.y);
 
-            float scaleX = ImGui::GetFontSize() * (windowSize.x / textSize.x);
-            float scaleY = ImGui::GetFontSize() * (windowSize.y / textSize.y);
+        float scale = std::min(scaleX, scaleY);
 
-            float scale = std::min(scaleX, scaleY);
+        ImGui::SetWindowFontScale(scale);
+    }
 
-            ImGui::SetWindowFontScale(scale);
-
-            ImGui::TextColored(config->color, "%s", label->name().c_str());
-        }
-
-        void destroy(LabelConfig* config)
-        {
-            ImGui::SetWindowFontScale(1.0f);
-            ImGui::PopFont();
-        }
-
-    } // namespace
-
-    void Label::render(ui::components::Label* label)
+    void Label::popStyle()
     {
-        auto* config = dynamic_cast<LabelConfig*>(label->config());
+        ImGui::SetWindowFontScale(1.0f);
+        ImGui::PopFont();
+    }
 
-        init(label, config);
-        destroy(config);
+    void Label::draw()
+    {
+        ImGui::TextColored(m_config->color, "%s", m_label->name().c_str());
     }
 
 } // ui::styling

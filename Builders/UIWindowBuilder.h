@@ -1,53 +1,6 @@
 #pragma once
+#include <stdexcept>
 #include <Styling/Window.h>
-
-class WindowPosConfigBuilder
-{
-public:
-    WindowPosConfigBuilder()
-        : m_config{}
-    { }
-
-    WindowPosConfigBuilder& relativePosition(bool relativePosition)
-    {
-        m_config.relativePosition = relativePosition;
-        return *this;
-    }
-
-    WindowPosConfigBuilder& posX(float x)
-    {
-        m_config.posX = x;
-        return *this;
-    }
-
-    WindowPosConfigBuilder& posY(float y)
-    {
-        m_config.posY = y;
-        return *this;
-    }
-
-    WindowPosConfigBuilder& relativePosX(float x)
-    {
-        m_config.rawPos.x = x;
-        return *this;
-    }
-
-    WindowPosConfigBuilder& relativePosY(float y)
-    {
-        m_config.rawPos.y = y;
-        return *this;
-    }
-
-    ui::styling::WindowPosConfig&& build()
-    {
-        return std::move(m_config);   
-    }
-
-private:
-    ui::styling::WindowPosConfig m_config;
-};
-
-
 
 class WindowSizeConfigBuilder
 {
@@ -83,7 +36,7 @@ public:
         return *this;
     }
 
-    ui::styling::WindowSizeConfig&& build()
+    ui::styling::WindowSizeConfig build()
     {
         return std::move(m_config);
     }
@@ -113,7 +66,7 @@ public:
         return *this;
     }
 
-    ui::styling::WindowTitleBarConfig&& build()
+    ui::styling::WindowTitleBarConfig build()
     {
         return std::move(m_config);
     }
@@ -161,12 +114,6 @@ public:
         return *this;
     }
 
-    WindowConfigBuilder& pos(const ui::styling::WindowPosConfig& pos)
-    {
-        m_config.pos = pos;
-        return *this;
-    }
-
     WindowConfigBuilder& size(const ui::styling::WindowSizeConfig& size)
     {
         m_config.size = size;
@@ -179,7 +126,7 @@ public:
         return *this;
     }
 
-    ui::styling::WindowConfig&& build()
+    ui::styling::WindowConfig build()
     {
         if (m_config.name.empty())
         {

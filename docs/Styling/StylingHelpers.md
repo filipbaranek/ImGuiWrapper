@@ -22,11 +22,15 @@ Pre-defined ImGui color vectors (`ImVec4`).
 
 ## Fonts (`ui::styling::Font`)
 
-Static helpers to load `.ttf` fonts at a specific size. Note that within responsive components (like Buttons or Labels), the text automatically scales to fit the responsive dimensions of the component based on the viewport.
+Static helpers to get `.ttf` fonts at a specific size. Note that within responsive components (like Buttons or Labels), the text automatically scales to fit the responsive dimensions of the component based on the viewport.
 
-* `Font::regular(float size)` - Loads `OpenSans-Regular.ttf`
-* `Font::bold(float size)` - Loads `OpenSans_Condensed-Bold.ttf`
-* `Font::extraBold(float size)` - Loads `OpenSans_Condensed-ExtraBold.ttf`
+* `Font::regular(float size)` - Returns `OpenSans-Regular.ttf`
+* `Font::bold(float size)` - Returns `OpenSans_Condensed-Bold.ttf`
+* `Font::extraBold(float size)` - Returns `OpenSans_Condensed-ExtraBold.ttf`
+
+A font is loaded the first time a file and size are requested. Later calls with the same file and size return the same `ImFont*`, so components can share a font without reading the file again. Colour, scale and position are not part of the font, so components sharing one can still differ in them.
+
+The returned pointers belong to the ImGui context, so they are only valid while it exists. The fonts are remembered for the whole process, so create one ImGui context per process: do not call these helpers after destroying a context and creating a new one.
 
 ## Example Usage in a Builder
 

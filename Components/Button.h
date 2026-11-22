@@ -3,19 +3,6 @@
 #include <functional>
 #include "Components/Component.h"
 
-namespace ui
-{
-  
-    enum class ButtonType
-    {
-        DEFAULT,
-        IMAGE,
-        RADIO,
-        RADIO_IMAGE
-    };
-
-} // ui
-
 namespace ui::components
 {
 

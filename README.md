@@ -18,12 +18,21 @@ The library requires a compiler that supports **C++20** and links against the fo
 * `glm` (Public)
 * `stb` (Private - specifically `stb_image`)
 
+## Building on Its Own
+
+CMake downloads the dependencies automatically. Generating the `glad` OpenGL loader also requires Python 3 with the `jinja2` package.
+
+```bash
+cmake -S . -B build
+cmake --build build -j
+```
+
 ## Integration (CMake)
 
 Since `ImGuiWrapper` is set up as a static library, you can easily integrate it into your existing CMake project.
 
 1. Clone this repository into your project (e.g., into a `libs/` or `vendor/` folder).
-2. Add it to your `CMakeLists.txt`:
+2. Add it to your `CMakeLists.txt`. Your project must define the `imgui`, `glad`, `glm` and `stb` targets, as nothing is downloaded in this mode:
 
 ```cmake
 add_subdirectory(path/to/ImGuiWrapper)
@@ -33,15 +42,17 @@ target_link_libraries(YourTargetName PRIVATE ImGuiWrapper)
 ```
 ## Quick Start
 
-Creating a UI layer involves inheriting from the `ui::components::Window` base class and implementing two virtual methods:
+Creating a UI layer involves inheriting from the `ui::components::Window` base class and implementing three virtual methods:
 
 * `initWindowConfig()` — for styling the window.
+* `createPlacement()` — for deciding where the window sits on the screen.
 * `initComponents()` — for populating it.
 ```cpp
 #include <Components/Window.h>
 #include <Components/Button.h>
 #include <Builders/UIWindowBuilder.h>
 #include <Builders/UIButtonBuilder.h>
+#include <Placements/ViewportPlacement.h>
 #include <Styling/Common.h>
 #include <iostream>
 
@@ -70,6 +81,11 @@ protected:
             .rounding(10.0f)
             .size(sizeConfig)
             .build();
+    }
+
+    std::unique_ptr<ui::placements::Placement> createPlacement() override
+    {
+        return std::make_unique<ui::placements::ViewportPlacement>(0.05f, 0.1f);
     }
 
     void initComponents() override

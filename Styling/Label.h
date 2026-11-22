@@ -2,6 +2,7 @@
 #include <string>
 #include <imgui.h>
 #include "Common.h"
+#include "Styling.h"
 
 namespace ui::components
 {
@@ -17,12 +18,21 @@ namespace ui::styling
         ImVec4  color;
     };
 
-    class Label
+    class Label : public Styling
     {
     public:
-        Label() = delete;
+        Label(ui::components::Label* label);
 
-        static void render(ui::components::Label* label);
+    protected:
+        void pushStyle() override;
+
+        void popStyle() override;
+
+        void draw() override;
+
+    private:
+        ui::components::Label* m_label;
+        LabelConfig*           m_config;
     };
 
 } // ui::styling

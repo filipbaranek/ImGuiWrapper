@@ -1,5 +1,6 @@
 #pragma once
 #include "Button.h"
+#include "RadioGroup.h"
 
 namespace ui::components
 {
@@ -9,7 +10,7 @@ namespace ui::components
     public:
         RadioButton(
             const std::string&                    name,
-            std::vector<RadioButton*>&            group,
+            RadioGroup&                           group,
             std::shared_ptr<ui::styling::IConfig> config,
             std::function<void(Button*)>          action);
 
@@ -19,13 +20,13 @@ namespace ui::components
 
         const bool& isSelected() const;
 
-        void setIsSelected(const bool& isSelected);
+        void setIsSelected(bool isSelected);
 
-        std::vector<RadioButton*>& group();
+        void select();
 
     private:
-        bool                       m_isSelected;
-        std::vector<RadioButton*>& m_group;
+        bool        m_isSelected;
+        RadioGroup& m_group;
     };
 
 } // ui::components

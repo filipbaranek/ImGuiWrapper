@@ -1,7 +1,15 @@
 cmake_minimum_required(VERSION 3.15)
 project(ImGuiWrapper VERSION 1.0.0 LANGUAGES CXX)
 
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+    include(cmake/Dependencies.cmake)
+endif()
+
 set(WRAPPER_SOURCES
+    Bindings/Binding.h
+    Bindings/ClampedBinding.h
+    Bindings/ReferenceBinding.h
+    Bindings/StoredBinding.h
     Components/Button.cpp
     Components/Button.h
     Components/CheckBox.cpp
@@ -14,9 +22,10 @@ set(WRAPPER_SOURCES
     Components/Label.cpp
     Components/Label.h
     Components/Layout.h
-    Components/Linkable.h
     Components/RadioButton.cpp
     Components/RadioButton.h
+    Components/RadioGroup.cpp
+    Components/RadioGroup.h
     Components/RadioImageButton.cpp
     Components/RadioImageButton.h
     Components/SameLine.h
@@ -24,17 +33,25 @@ set(WRAPPER_SOURCES
     Components/Slider.h
     Components/Window.cpp
     Components/Window.h
+    Placements/AnchoredPlacement.h
+    Placements/CenteredPlacement.h
+    Placements/Placement.h
+    Placements/ViewportPlacement.h
     Styling/Button.cpp
     Styling/Button.h
     Styling/CheckBox.cpp
     Styling/CheckBox.h
     Styling/Common.h
     Styling/Font.h
-    Styling/InputBox.cpp
+    Styling/Icon.cpp
+    Styling/Icon.h
+    Styling/IconFactory.cpp
+    Styling/IconFactory.h
     Styling/InputBox.h
     Styling/Label.cpp
     Styling/Label.h
     Styling/Slider.h
+    Styling/Styling.h
     Styling/Window.cpp
     Styling/Window.h
     Utils/ImageLoader.cpp

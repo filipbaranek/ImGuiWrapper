@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "Placements/Placement.h"
 #include "Utils/VisibilityHandler.h"
 
 namespace ui::styling
@@ -16,46 +17,30 @@ namespace ui::styling
 
             if (width < minResWidth || height < minResHeight)
             {
-                VisibilityHandler::setOutOfRange(layer);
+                VisibilityHandler::instance().setOutOfRange(layer);
             }
             else
             {
-                VisibilityHandler::setInRange(layer);
+                VisibilityHandler::instance().setInRange(layer);
             }
         }
 
-        void initPosAndSize(WindowConfig& config, bool isPosResponsive)
-        {
-            auto& posConfig  = config.pos;
-            auto& sizeConfig = config.size;
-
-            const ImGuiViewport* viewport = ImGui::GetMainViewport();
-
-            const ImVec2 vpPos  = viewport->Pos;
-            const ImVec2 vpSize = viewport->Size;
-
-            if (isPosResponsive)
-            {
-                posConfig.rawPos = ImVec2(vpPos.x + posConfig.posX * vpSize.x, vpPos.y + posConfig.posY * vpSize.y);
-            }
-            sizeConfig.rawSize = ImVec2(sizeConfig.width * vpSize.x, sizeConfig.height * vpSize.y);
-
-            checkResolutionInRange(config.layerName, vpSize.y, vpSize.x, sizeConfig.minHeight, sizeConfig.minWidth);
-        }
     } // namespace
 
-    void Window::setPosAndSize(WindowConfig& config)
+    void Window::setSize(WindowConfig& config)
     {
-        bool isPosResponsive = true;
+        auto& sizeConfig = config.size;
 
-        initPosAndSize(config, isPosResponsive);
+        const ImVec2 vpSize = ImGui::GetMainViewport()->Size;
+
+        sizeConfig.rawSize = ImVec2(sizeConfig.width * vpSize.x, sizeConfig.height * vpSize.y);
+
+        checkResolutionInRange(config.layerName, vpSize.y, vpSize.x, sizeConfig.minHeight, sizeConfig.minWidth);
     }
 
-    void Window::setRelativePosAndSize(WindowConfig& config)
+    void Window::setPos(WindowConfig& config, const ui::placements::Placement& placement)
     {
-        bool isPosResponsive = false;
-
-        initPosAndSize(config, isPosResponsive);
+        placement.setPosition(config.pos, config.size);
     }
 
     void Window::init(WindowConfig& config)

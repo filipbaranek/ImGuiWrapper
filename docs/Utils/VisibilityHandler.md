@@ -2,7 +2,9 @@
 
 **Header:** `#include <Utils/VisibilityHandler.h>`
 
-The `VisibilityHandler` is a static global utility class used to manage the visibility state of entire `Window` layers. It operates using string-based layer names. 
+The `VisibilityHandler` manages the visibility state of entire `Window` layers. It operates using string-based layer names.
+
+The state lives in a single private instance, created on first use. Callers never touch that instance directly: they use the public static methods below, and the class cannot be constructed or copied from outside.
 
 It handles two separate boolean checks for a window:
 1. **User Visibility:** Whether the application logic wants the window to be shown (`show()` / `hide()`).

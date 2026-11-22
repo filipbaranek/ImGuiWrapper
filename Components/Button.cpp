@@ -11,7 +11,7 @@ namespace ui::components
 
     void Button::render()
     {
-        ui::styling::Button::render(this);
+        ui::styling::Button(this).render();
     }
 
     void Button::setAction(std::function<void(Button*)> action)
