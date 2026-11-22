@@ -46,6 +46,8 @@ public:
 protected:
     void initWindowConfig() override { /* Omitted */ }
 
+    std::unique_ptr<ui::placements::Placement> createPlacement() override { /* Omitted */ }
+
     void initComponents() override
     {
         auto config = ButtonConfigBuilder().size(ImVec2{0.04f, 0.02f}).build();

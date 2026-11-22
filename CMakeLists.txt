@@ -33,6 +33,10 @@ set(WRAPPER_SOURCES
     Components/Slider.h
     Components/Window.cpp
     Components/Window.h
+    Placements/AnchoredPlacement.h
+    Placements/CenteredPlacement.h
+    Placements/Placement.h
+    Placements/ViewportPlacement.h
     Styling/Button.cpp
     Styling/Button.h
     Styling/CheckBox.cpp

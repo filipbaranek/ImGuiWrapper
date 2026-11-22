@@ -71,6 +71,11 @@ protected:
         // Window configuration omitted for brevity
     }
 
+    std::unique_ptr<ui::placements::Placement> createPlacement() override
+    {
+        // Placement omitted for brevity
+    }
+
     void initComponents() override
     {
         // 1. Build the shared configuration for our buttons

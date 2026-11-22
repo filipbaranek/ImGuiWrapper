@@ -4,15 +4,17 @@
 #include <functional>
 #include "Common.h"
 
+namespace ui::placements
+{
+    class Placement;
+} // ui::placements
+
 namespace ui::styling
 {
 
     struct WindowPosConfig
     {
-        bool   relativePosition;
-        float  posX;              // represents percentage of screen to achieve responsive design
-        float  posY;              // represents percentage of screen to achieve responsive design
-        ImVec2 rawPos;            // used automaticly by IWindow class
+        ImVec2 rawPos;            // used automaticly by Window class
     };
 
     struct WindowSizeConfig
@@ -49,9 +51,9 @@ namespace ui::styling
     public:
         Window() = delete;
 
-        static void setPosAndSize(WindowConfig& config);
+        static void setSize(WindowConfig& config);
 
-        static void setRelativePosAndSize(WindowConfig& config);
+        static void setPos(WindowConfig& config, const ui::placements::Placement& placement);
 
         static void init(WindowConfig& config);
 

@@ -1,4 +1,5 @@
 #include "Window.h"
+#include <stdexcept>
 #include "Utils/VisibilityHandler.h"
 
 namespace ui::components
@@ -33,14 +34,8 @@ namespace ui::components
     {
         // Must run before the visibility check: it also re-evaluates the resolution range (setInRange/setOutOfRange),
         // so an out-of-range window could otherwise never become visible again
-        if (!m_windowConfig.pos.relativePosition)
-        {
-            ui::styling::Window::setPosAndSize(m_windowConfig);
-        }
-        else
-        {
-            ui::styling::Window::setRelativePosAndSize(m_windowConfig);
-        }
+        ui::styling::Window::setSize(m_windowConfig);
+        ui::styling::Window::setPos(m_windowConfig, placement());
 
         if (!VisibilityHandler::instance().isVisible(m_layerName))
         {
@@ -66,6 +61,21 @@ namespace ui::components
         m_layouts.emplace_back(std::make_unique<Layout>(margin));
         Layout* layout = m_layouts.back().get();
         return layout;
+    }
+
+    ui::placements::Placement& Window::placement()
+    {
+        if (m_placement == nullptr)
+        {
+            m_placement = createPlacement();
+
+            if (m_placement == nullptr)
+            {
+                throw std::logic_error("Window error: createPlacement() must not return nullptr");
+            }
+        }
+
+        return *m_placement;
     }
 
 } // ui

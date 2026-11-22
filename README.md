@@ -42,15 +42,17 @@ target_link_libraries(YourTargetName PRIVATE ImGuiWrapper)
 ```
 ## Quick Start
 
-Creating a UI layer involves inheriting from the `ui::components::Window` base class and implementing two virtual methods:
+Creating a UI layer involves inheriting from the `ui::components::Window` base class and implementing three virtual methods:
 
 * `initWindowConfig()` — for styling the window.
+* `createPlacement()` — for deciding where the window sits on the screen.
 * `initComponents()` — for populating it.
 ```cpp
 #include <Components/Window.h>
 #include <Components/Button.h>
 #include <Builders/UIWindowBuilder.h>
 #include <Builders/UIButtonBuilder.h>
+#include <Placements/ViewportPlacement.h>
 #include <Styling/Common.h>
 #include <iostream>
 
@@ -79,6 +81,11 @@ protected:
             .rounding(10.0f)
             .size(sizeConfig)
             .build();
+    }
+
+    std::unique_ptr<ui::placements::Placement> createPlacement() override
+    {
+        return std::make_unique<ui::placements::ViewportPlacement>(0.05f, 0.1f);
     }
 
     void initComponents() override

@@ -3,6 +3,7 @@
 #include <imgui.h>
 #include <glm/glm.hpp>
 #include "Styling/Window.h"
+#include "Placements/Placement.h"
 #include "Layout.h"
 
 namespace ui::components
@@ -36,6 +37,8 @@ namespace ui::components
 
         virtual void initComponents() = 0;
 
+        virtual std::unique_ptr<ui::placements::Placement> createPlacement() = 0;
+
         void render();
 
         Layout* emplaceLayout(const ImVec2& margin = {});
@@ -53,7 +56,11 @@ namespace ui::components
         std::vector<std::unique_ptr<Layout>> m_layouts;
 
     private:
-        std::string m_layerName;
+        ui::placements::Placement& placement();
+
+    private:
+        std::string                                m_layerName;
+        std::unique_ptr<ui::placements::Placement> m_placement;
     };
 
 } // ui

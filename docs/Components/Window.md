@@ -3,29 +3,33 @@
 **Headers:** 
 * `#include <Components/Window.h>`
 * `#include <Builders/UIWindowBuilder.h>` (for configuration)
+* `#include <Placements/...>` (for the position, see [Placements](../Placements/Placement.md))
 
 The `Window` class is the central structural component of the ImGuiWrapper library. It acts as the base class for all your custom UI layers. It manages its own ImGui window context, handles responsive positioning and sizing, and serves as the container for `Layout` objects and their UI components.
 
 ## Configuration (`WindowConfigBuilder`)
 
-Configuring a window involves up to four builders, usually combined inside the `initWindowConfig()` method:
-1. `WindowPosConfigBuilder` - Sets responsive relative positioning.
-2. `WindowSizeConfigBuilder` - Sets responsive dimensions and minimum constraints.
-3. `WindowTitleBarBuilder` - Styles the title bar.
-4. `WindowConfigBuilder` - The main builder that brings the others together along with rounding, background color, and ImGui flags.
+Configuring a window involves up to three builders, usually combined inside the `initWindowConfig()` method:
+1. `WindowSizeConfigBuilder` - Sets responsive dimensions and minimum constraints.
+2. `WindowTitleBarBuilder` - Styles the title bar.
+3. `WindowConfigBuilder` - The main builder that brings the others together along with rounding, background color, and ImGui flags.
 
 *(See `docs/Builders/UIWindowBuilder.md` for a full breakdown of these builders).*
 
+The position of the window is not part of the configuration. It is decided by the [placement](../Placements/Placement.md) the window creates in `createPlacement()`.
+
 ## Class Reference (`ui::components::Window`)
 
-To create a new UI window, you must inherit from `ui::components::Window` and implement two protected virtual methods.
+To create a new UI window, you must inherit from `ui::components::Window` and implement three protected virtual methods.
 
 ### Protected Virtual Methods
 
 * **`virtual void initWindowConfig() = 0`**
-  Used to define the window's visual properties, position, size, and flags. Must populate the protected `m_windowConfig` variable.
+  Used to define the window's visual properties, size, and flags. Must populate the protected `m_windowConfig` variable.
 * **`virtual void initComponents() = 0`**
   Used to create layouts and populate them with components (Buttons, InputBoxes, etc.).
+* **`virtual std::unique_ptr<ui::placements::Placement> createPlacement() = 0`**
+  Factory method that decides where the window is placed on the screen, by returning one of the [placements](../Placements/Placement.md) (`ViewportPlacement`, `CenteredPlacement`, `AnchoredPlacement`) or your own. The window calls it once, on its first `render()`, and asks the placement for the position every frame. Returning `nullptr` throws `std::logic_error`.
 
 ### Layout and Component Emplacement (Protected)
 
@@ -43,7 +47,7 @@ Inside `initComponents()`, use these methods to build your UI:
 * **`bool clickedOnWindow(const glm::vec2& clickPos)`**
   Takes a screen-space coordinate and returns true if the click falls within this window's bounding box.
 * **`template<typename T, typename... Args> static std::unique_ptr<T> create(Args&&... args)`**
-  A factory method used to safely instantiate your custom window class, ensuring `initWindowConfig()` and `initComponents()` are called automatically upon creation.
+  Static helper used to safely instantiate your custom window class, ensuring `initWindowConfig()` and `initComponents()` are called automatically upon creation.
 
 ## Example Usage
 
@@ -52,6 +56,7 @@ Inside `initComponents()`, use these methods to build your UI:
 #include <Components/Button.h>
 #include <Builders/UIWindowBuilder.h>
 #include <Builders/UIButtonBuilder.h>
+#include <Placements/CenteredPlacement.h>
 #include <Styling/Common.h>
 
 class MyCustomLayer : public ui::components::Window
@@ -82,6 +87,11 @@ protected:
             .build();
     }
 
+    std::unique_ptr<ui::placements::Placement> createPlacement() override
+    {
+        return std::make_unique<ui::placements::CenteredPlacement>();
+    }
+
     void initComponents() override
     {
         auto btnConfig = ButtonConfigBuilder().size(ImVec2{0.05f, 0.03f}).build();
@@ -94,3 +104,4 @@ protected:
         });
     }
 };
+```
